@@ -12,3 +12,18 @@ $app->get('/[{name}]', function (Request $request, Response $response, array $ar
     // Render index view
     return $this->renderer->render($response, 'index.phtml', $args);
 });
+
+// get empresas
+$app->get('/empresas', function ($request, $response, $args) {
+    $sth = $this->db->prepare("SELECT * FROM empresas ORDER BY empresa ASC");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+// get empresa
+$app->get('/empresas/{id}', function ($request, $response, $args) {
+    $sth = $this->db->prepare("SELECT * FROM empresas WHERE id_empresa = ".$args['id']);
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
