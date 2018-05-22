@@ -60,3 +60,33 @@ $app->get('/causas', function ($request, $response, $args) {
     $todos = $sth->fetchAll();
     return $this->response->withJson($todos);
 });
+
+// get contribuciones
+$app->get('/contribuciones', function ($request, $response, $args) {
+    $consulta = "SELECT * 
+    FROM contribuciones
+    JOIN alumnos ON alumnos.id_alumno = contribuciones.id_alumno
+    JOIN cursos ON cursos.id_curso = alumnos.id_curso
+    JOIN proyectos ON proyectos.id_proyecto = contribuciones.id_proyecto
+    JOIN causas ON causas.id_causa = proyectos.id_causa
+    JOIN empresas ON empresas.id_empresa = proyectos.id_empresa";
+    $sth = $this->db->prepare($consulta);
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// get total contribuciones
+$app->get('/contribuciones/totales', function ($request, $response, $args) {
+    $consulta = "SELECT proyectos.*, causas.*, empresas.*, SUM(contribucion) AS aportado
+    FROM contribuciones
+    JOIN proyectos ON proyectos.id_proyecto = contribuciones.id_proyecto
+    JOIN causas ON causas.id_causa = proyectos.id_causa
+    JOIN empresas ON empresas.id_empresa = proyectos.id_empresa
+    GROUP BY proyectos.id_proyecto";    
+    $sth = $this->db->prepare($consulta);
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
