@@ -78,11 +78,11 @@ $app->get('/contribuciones', function ($request, $response, $args) {
 
 // get total contribuciones
 $app->get('/contribuciones/totales', function ($request, $response, $args) {
-    $consulta = "SELECT proyectos.*, causas.*, empresas.*, SUM(contribucion) AS aportado
-    FROM contribuciones
-    JOIN proyectos ON proyectos.id_proyecto = contribuciones.id_proyecto
-    JOIN causas ON causas.id_causa = proyectos.id_causa
-    JOIN empresas ON empresas.id_empresa = proyectos.id_empresa
+    $consulta = "SELECT proyectos.*, causas.*, empresas.*, IFNULL(SUM(contribucion),0) AS aportado
+    FROM proyectos
+    LEFT JOIN contribuciones ON proyectos.id_proyecto = contribuciones.id_proyecto
+    LEFT JOIN causas ON causas.id_causa = proyectos.id_causa
+    LEFT JOIN empresas ON empresas.id_empresa = proyectos.id_empresa
     GROUP BY proyectos.id_proyecto";    
     $sth = $this->db->prepare($consulta);
     $sth->execute();
