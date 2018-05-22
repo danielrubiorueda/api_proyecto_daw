@@ -18,7 +18,7 @@ return [
 
         // Database connection settings
         "db" => [
-            "host" => "locahost",
+            "host" => "localhost",
             "dbname" => "fct",
             "user" => "root",
             "pass" => ""
