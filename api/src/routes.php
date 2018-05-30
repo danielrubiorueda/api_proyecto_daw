@@ -95,5 +95,6 @@ $app->get('/', function ($request, $response, $args) {
     $sth = $this->db->prepare("SELECT * FROM proyectos ORDER BY proyecto ASC");
     $sth->execute();
     $todos = $sth->fetchAll();
+    header("Access-Control-Allow-Origin: *");
     return $this->response->withJson($todos);
 });
