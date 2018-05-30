@@ -1,0 +1,49 @@
+@font-face {
+    font-family: roboto;
+    src: url(roboto/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: shadows;
+    src: url(shadowsintolight/ShadowsIntoLight.ttf);
+}
+#logo img{
+    width: 50px;
+}
+#logo span{
+    font-family: 'shadows';
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+#navbar a, nav i, #logo span {
+    color: #ff322e;
+    cursor: pointer;
+}
+#navbar a:hover {
+    color: #262626;
+}
+#navbar button {
+    background-color: #bbd43b;
+}
+.jumbotron.inicio {
+    background-image: url(jumbo_1.jpg);
+}
+.jumbotron.colabora {
+    background-image: url(jumbo_2.jpg);
+}
+.jumbotron {
+    background-size: cover;
+    background-position: 50%;
+    color: white;
+    border-radius: 0;
+    padding-top: 7em;
+}
+.form-control {
+    flex: 1;
+    margin-right: 5px;
+}
+.form-inline {
+    flex-flow: row;
+}
+footer p{
+    padding: 2em;
+}
