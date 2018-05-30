@@ -25,10 +25,13 @@
     background-color: #bbd43b;
 }
 .jumbotron.inicio {
-    background-image: url(jumbo_1.jpg);
+    background-image: url(1.png);
 }
 .jumbotron.colabora {
-    background-image: url(jumbo_2.jpg);
+    background-image: url(2.png);
+}
+.jumbotron.proyectos {
+    background-image: url(3.png);
 }
 .jumbotron {
     background-size: cover;
@@ -36,6 +39,7 @@
     color: white;
     border-radius: 0;
     padding-top: 7em;
+    margin: 1em 0;
 }
 .form-control {
     flex: 1;
