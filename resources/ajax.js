@@ -1,6 +1,6 @@
 $(function () {
 
-    $.get('http://localhost/fct/api/public/').done(function (r) {
+    $.get('http://localhost/fct/api/public/api/inicio').done(function (r) {
         if (r.length >= 3) {
             var elemento = [];
             r.forEach(function (e) {
@@ -9,8 +9,10 @@ $(function () {
                     '<img class="card-img-top" src="/resources/' + e.img_proyecto + '" alt="' + e.proyecto + '">' +
                     '<div class="card-body">' +
                     '<h5 class="card-title">' + e.proyecto + '</h5>' +
+                    '<p>¡Faltan ' + (e.objetivo - e.contribucion) + 'km para la meta!</p>' +
+                    '<div class="progreso"><span style="width:'+(e.contribucion/e.objetivo*100)+'%"><span></div>'+
                     '<p class="card-text">' + e.descripcion_proyecto + '</p>' +
-                    '<a href="' + e.hashtag_proyecto + '" class="btn btn-primary">Ver proyecto</a>' +
+                    '<a href="' + e.id_proyecto + '" class="btn btn-primary">Ver proyecto</a>' +
                     '</div></div></div>');
             });
             $.each(elemento, function (i, value) {

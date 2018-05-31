@@ -14,6 +14,12 @@
     font-size: 1.5em;
     vertical-align: middle;
 }
+.navbar{
+    background: linear-gradient(90deg,
+    rgba(255, 204, 206, 0.9), 
+    rgba(247, 255, 209, 0.9)
+    );
+}
 #navbar a, nav i, #logo span {
     color: #ff322e;
     cursor: pointer;
@@ -39,7 +45,7 @@
     color: white;
     border-radius: 0;
     padding-top: 7em;
-    margin: 1em 0;
+    margin: 0 0 1em 0;
 }
 .form-control {
     flex: 1;
@@ -53,4 +59,21 @@ footer p{
 }
 #cards {
     min-height: 450px;
+}
+
+.progreso {
+    background: #d7e6a9;
+    height: 15px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+.progreso > span{
+    display:block;
+    background: repeating-linear-gradient(135deg, #81a90b,#81a90b 6px, #c0dc6c 6px, #c0dc6c 12px);
+    background-color: #73901c;
+    width: 0;
+    height: 15px;
+    border:solid 1px #81a90b;
+    border-radius: 5px;
+    margin: 5px 0;
 }
