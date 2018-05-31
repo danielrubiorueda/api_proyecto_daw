@@ -6,7 +6,7 @@ $(function () {
             r.forEach(function (e) {
                 elemento.push('<div class="col-md-4">' +
                     '<div class="card">' +
-                    '<img class="card-img-top" src="/resources/' + e.img_proyecto + '" alt="' + e.proyecto + '">' +
+                    '<img class="card-img-top" src="resources/' + e.img_proyecto + '" alt="' + e.proyecto + '">' +
                     '<div class="card-body">' +
                     '<h5 class="card-title">' + e.proyecto + '</h5>' +
                     '<p>¡Faltan ' + (e.objetivo - e.contribucion) + 'km para la meta!</p>' +
