@@ -92,7 +92,7 @@ $app->get('/contribuciones', function ($request, $response, $args) {
 
 // get proyectos
 $app->get('/', function ($request, $response, $args) {
-    $sth = $this->db->prepare("SELECT * FROM proyectos ORDER BY proyecto ASC");
+    $sth = $this->db->prepare("SELECT * FROM proyectos ORDER BY proyecto ASC limit 3");
     $sth->execute();
     $todos = $sth->fetchAll();
     header("Access-Control-Allow-Origin: *");

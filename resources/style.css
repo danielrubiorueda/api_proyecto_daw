@@ -51,3 +51,6 @@
 footer p{
     padding: 2em;
 }
+#cards {
+    min-height: 450px;
+}
