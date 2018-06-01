@@ -97,3 +97,35 @@ $app->get('/api/inicio', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     return $this->response->withJson($todos);
 });
+
+$app->get('/api/illo', function ($request, $response, $args) {
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://www.strava.com/oauth/token?client_id=26016&client_secret=43476f02df28fd7a7a5f6cd7aba18618d3f41b5d&code=".$_GET['code'],
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_HTTPHEADER => array(
+        "Cache-Control: no-cache",
+        "Postman-Token: d52469cd-65f0-4b10-842b-d22059639096"
+    ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+    header('location: http://127.0.0.1:5500/');
+    } else {
+        $response = json_decode($response);
+        return $response->withRedirect('http://127.0.0.1:5500/?'.http_build_query($response));
+    }
+
+});
