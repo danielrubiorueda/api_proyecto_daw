@@ -153,30 +153,35 @@
     <footer class="text-center">
         <p>&copy; SoliRun 2018</p>
     </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
     <script src="resources/js/jquery-3.3.1.min.js"></script>
-    <script src="resources/js/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
-    <script src="resources/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
-    <script src="resources/js/ajax.js"></script>
+    <script src="resources/js/popper.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+    <script src="resources/js/script.js"></script>
+
     <script type="text/javascript">
-        /* First CSS File */
-        var giftofspeed = document.createElement('link');
-        giftofspeed.rel = 'stylesheet';
-        giftofspeed.href = 'resources/css/bootstrap.min.css';
-        giftofspeed.type = 'text/css';
-        var godefer = document.getElementsByTagName('link')[0];
-        godefer.parentNode.insertBefore(giftofspeed, godefer);
-        
-        /* Second CSS File */
-        var giftofspeed2 = document.createElement('link');
-        giftofspeed2.rel = 'stylesheet';
-        giftofspeed2.href = 'resources/css/style.css';
-        giftofspeed2.type = 'text/css';
-        var godefer2 = document.getElementsByTagName('link')[0];
-        godefer2.parentNode.insertBefore(giftofspeed2, godefer2);
+        $.get('http://localhost/fct/api/public/api/inicio').done(function (r) {
+            if (r.length >= 3) {
+                var elemento = [];
+                r.forEach(function (e) {
+                    elemento.push('<div class="col-md-4">' +
+                        '<div class="card">' +
+                        '<img class="card-img-top" src="resources/img/' + e.img_proyecto + '" alt="' + e.proyecto + '">' +
+                        '<div class="card-body">' +
+                        '<h5 class="card-title">' + e.proyecto + '</h5>' +
+                        '<p>¡Faltan ' + (e.objetivo - e.contribucion) + 'km para la meta!</p>' +
+                        '<div class="progreso"><span style="width:'+(e.contribucion/e.objetivo*100)+'%"><span></div>'+
+                        '<p class="card-text">' + e.descripcion_proyecto + '</p>' +
+                        '<a href="' + e.id_proyecto + '" class="btn btn-primary">Ver proyecto</a>' +
+                        '</div></div></div>');
+                });
+                $.each(elemento, function (i, value) {
+                    setTimeout(function(){
+                        $(value).appendTo('#cards').toggle().fadeToggle(800);
+                    }, 300 + ( i * 300 ));
+                });
+            }
+        });
         </script>
 </body>
 
