@@ -119,16 +119,7 @@
     <script src="/resources/js/script.js"></script>
 
     <script type="text/javascript">
-        $.get('http://localhost/fct/api/public/api/proyectos').done(function (r) {
-            if (r.length >= 3) {
-                var elemento = cardProyecto(r);
-                $.each(elemento, function (i, value) {
-                    setTimeout(function () {
-                        $(value).appendTo('#cards').toggle().slideToggle(500);
-                    }, 200 + (i * 200));
-                });
-            }
-        });
+        
     </script>
 </body>
 

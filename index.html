@@ -156,7 +156,7 @@
                 var elemento = cardProyecto(r);
                 $.each(elemento, function (i, value) {
                     setTimeout(function () {
-                        $(value).appendTo('#cards').toggle().fadeToggle(500);
+                        $(value).appendTo('#cards').toggle().slideToggle(500);
                     }, 200 + (i * 200));
                 });
             }
