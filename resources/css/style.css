@@ -31,13 +31,13 @@
     background-color: #bbd43b;
 }
 .jumbotron.inicio {
-    background-image: url(1.jpg);
+    background-image: url(../img/1.jpg);
 }
 .jumbotron.colabora {
-    background-image: url(2.jpg);
+    background-image: url(../img/2.jpg);
 }
 .jumbotron.proyectos {
-    background-image: url(3.jpg);
+    background-image: url(../img/3.jpg);
 }
 .jumbotron {
     background-size: cover;
@@ -80,12 +80,12 @@ footer p{
 
 @media screen and (max-width: 600px){
     .jumbotron.inicio {
-        background-image: url(1s.jpg);
+        background-image: url(../img/1s.jpg);
     }
     .jumbotron.colabora {
-        background-image: url(2s.jpg);
+        background-image: url(../img/2s.jpg);
     }
     .jumbotron.proyectos {
-        background-image: url(3s.jpg);
+        background-image: url(../img/3s.jpg);
     }
 }
