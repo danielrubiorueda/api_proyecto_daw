@@ -88,6 +88,10 @@ footer p{
     border: solid 1px #42540b;
 }
 
+main#inicio {
+    margin-top: -2em;
+}
+
 @media screen and (max-width: 600px){
     .jumbotron.inicio {
         background-image: url(../img/1s.jpg);

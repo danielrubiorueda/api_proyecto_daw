@@ -18,7 +18,7 @@
 <body>
     <div class="navbar navbar-expand-md navbar fixed-top">
         <nav class="container">
-            <a id="logo" class="navbar-brand" href='#inicio'>
+            <a id="logo" class="navbar-brand" href='/'>
                 <img class="img img-fluid" src="/resources/img/logoco.png" alt="Logotipo SoliRun">
                 <span>SoliRun</span>
             </a>
@@ -47,38 +47,6 @@
     </div>
 
     <main id="inicio" role="main">
-
-        <div>
-            <div class="jumbotron inicio">
-                <div class="container">
-                    <h1 class="display-4 text-center">Corre y cambia el mundo</h1>
-                    <p class="text-center">Con SoliRun puedes reciclar tu energía y convertir los kms que corres en el combustible necesario para
-                        cambiar las cosas, proyecto a proyecto.</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h2>Todo por una buena causa</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                            mollis euismod. Donec sed odio dui. </p>
-                    </div>
-                    <div class="col-md-4">
-                        <h2>Empresas solidarias</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                            mollis euismod. Donec sed odio dui. </p>
-                    </div>
-                    <div class="col-md-4">
-                        <h2>Alumnos comprometidos</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                            mollis euismod. Donec sed odio dui. </p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div id="proyectos">
             <div class="jumbotron proyectos">
@@ -151,30 +119,17 @@
     <script src="/resources/js/script.js"></script>
 
     <script type="text/javascript">
-        $.get('http://localhost/fct/api/public/api/inicio').done(function (r) {
+        $.get('http://localhost/fct/api/public/api/proyectos').done(function (r) {
             if (r.length >= 3) {
-                var elemento = [];
-                r.forEach(function (e) {
-                    elemento.push('<div class="col-md-4">' +
-                        '<div class="card">' +
-                        '<img class="card-img-top" src="/resources/img/' + e.img_proyecto + '" alt="' + e.proyecto + '">' +
-                        '<div class="card-body">' +
-                        '<h5 class="card-title">' + e.proyecto + '</h5>' +
-                        '<p>¡Faltan ' + (e.objetivo - e.contribucion) + 'km para la meta!</p>' +
-                        '<div class="progreso"><span style="width:'+(e.contribucion/e.objetivo*100)+'%"><span></div>'+
-                        '<p class="card-text">' + e.descripcion_proyecto + '</p>' +
-                        '<p class="card-text donacion">' + e.donacion + '€</p>' +
-                        '<p class="card-text">Patrocinado por <a href="' + e.www_empresa + '" target="_blank">' + e.empresa + '</a></p>' +
-                        '</div></div></div>');
-                });
+                var elemento = cardProyecto(r);
                 $.each(elemento, function (i, value) {
-                    setTimeout(function(){
-                        $(value).appendTo('#cards').toggle().fadeToggle(800);
-                    }, 300 + ( i * 300 ));
+                    setTimeout(function () {
+                        $(value).appendTo('#cards').toggle().fadeToggle(500);
+                    }, 200 + (i * 200));
                 });
             }
         });
-        </script>
+    </script>
 </body>
 
 </html>

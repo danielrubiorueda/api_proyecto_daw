@@ -19,22 +19,6 @@ $app->get('/api/empresas', function ($request, $response, $args) {
     return $this->response->withJson($todos);
 });
 
-// get proyecto
-$app->get('/api/proyectos/{id}', function ($request, $response, $args) {
-    $sth = $this->db->prepare("SELECT * FROM proyectos WHERE id_proyecto = ".$args['id']);
-    $sth->execute();
-    $todos = $sth->fetchAll();
-    return $this->response->withJson($todos);
-});
-
-// get proyectos
-$app->get('/api/proyectos', function ($request, $response, $args) {
-    $sth = $this->db->prepare("SELECT * FROM proyectos ORDER BY id_proyecto ASC");
-    $sth->execute();
-    $todos = $sth->fetchAll();
-    return $this->response->withJson($todos);
-});
-
 // get causa
 $app->get('/api/causas/{id}', function ($request, $response, $args) {
     $sth = $this->db->prepare("SELECT * FROM causas WHERE id_causa = ".$args['id']);
@@ -77,6 +61,27 @@ $app->get('/api/contribuciones', function ($request, $response, $args) {
     $sth = $this->db->prepare($consulta);
     $sth->execute();
     $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// get proyecto
+$app->get('/api/proyectos/{id}', function ($request, $response, $args) {
+    $sth = $this->db->prepare("SELECT * FROM proyectos WHERE id_proyecto = ".$args['id']);
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// get proyectos
+$app->get('/api/proyectos', function ($request, $response, $args) {
+    $sth = $this->db->prepare("SELECT proyectos.*, ifnull(sum(contribucion),0) as contribucion, empresas.* FROM proyectos 
+    LEFT JOIN contribuciones on contribuciones.id_proyecto = proyectos.id_proyecto
+    LEFT JOIN empresas on empresas.id_empresa = proyectos.id_empresa
+    GROUP BY proyectos.id_proyecto
+    ORDER BY proyectos.id_proyecto ASC");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    header("Access-Control-Allow-Origin: *");
     return $this->response->withJson($todos);
 });
 

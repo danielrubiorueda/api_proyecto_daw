@@ -23,6 +23,25 @@ $(function () {
 
 });
 
+function cardProyecto(r){
+    var elemento = [];
+    r.forEach(function (e) {
+        elemento.push('<div class="col-md-4">' +
+        '<div class="card">' +
+        '<img class="card-img-top" src="/resources/img/' + e.img_proyecto + '" alt="' + e.proyecto + '">' +
+        '<div class="card-body">' +
+        '<h5 class="card-title">' + e.proyecto + '</h5>' +
+        '<p>¡Faltan ' + (e.objetivo - e.contribucion) + 'km para la meta!</p>' +
+        '<div class="progreso"><span style="width:'+(e.contribucion/e.objetivo*100)+'%"><span></div>'+
+        '<p class="card-text">' + e.descripcion_proyecto + ' <a target="_blank" href="https://www.instagram.com/explore/tags/' + e.hashtag_proyecto + '/">#' + e.hashtag_proyecto + '</a></p>' +
+        '<p class="card-text donacion">' + e.donacion + '€</p>' +
+        '<p class="card-text">Patrocinado por <a href="' + e.www_empresa + '" target="_blank">' + e.empresa + '</a></p>' +
+        '</div></div></div>');
+    });
+    return elemento;
+}
+
+
 var idapp = '26016';
 var secret = '43476f02df28fd7a7a5f6cd7aba18618d3f41b5d';
 var redirect = 'http://localhost';
