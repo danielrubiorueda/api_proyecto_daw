@@ -45,7 +45,7 @@
     color: white;
     border-radius: 0 !important;
     padding-top: 7em !important;
-    margin: 0 0 1em 0;
+    margin: 2em 0 !important;
 }
 .form-control {
     flex: 1;
@@ -76,6 +76,16 @@ footer p{
     border:solid 1px #81a90b;
     border-radius: 5px;
     margin: 5px 0;
+}
+
+.card-text.donacion {
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(#81a90b, #637d14, #81a90b);
+    border-radius: 10px;
+    border: solid 1px #42540b;
 }
 
 @media screen and (max-width: 600px){

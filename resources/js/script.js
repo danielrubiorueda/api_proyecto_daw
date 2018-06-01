@@ -9,14 +9,14 @@ $(function () {
     // carga css en diferido
     var cssd = document.createElement('link');
     cssd.rel = 'stylesheet';
-    cssd.href = 'resources/css/bootstrap.min.css';
+    cssd.href = '/resources/css/bootstrap.min.css';
     cssd.type = 'text/css';
     var godefer = document.getElementsByTagName('link')[0];
     godefer.parentNode.insertBefore(cssd, godefer);
 
     var cssd2 = document.createElement('link');
     cssd2.rel = 'stylesheet';
-    cssd2.href = 'resources/css/style.css';
+    cssd2.href = '/resources/css/style.css';
     cssd2.type = 'text/css';
     var godefer2 = document.getElementsByTagName('link')[0];
     godefer2.parentNode.insertBefore(cssd2, godefer2);

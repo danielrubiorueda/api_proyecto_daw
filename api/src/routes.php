@@ -82,19 +82,13 @@ $app->get('/api/contribuciones', function ($request, $response, $args) {
 
 // get proyectos
 $app->get('/api/inicio', function ($request, $response, $args) {
-    $sth = $this->db->prepare("SELECT proyectos.*, ifnull(sum(contribucion),0) as contribucion FROM proyectos 
+    $sth = $this->db->prepare("SELECT proyectos.*, ifnull(sum(contribucion),0) as contribucion, empresas.* FROM proyectos 
     LEFT JOIN contribuciones on contribuciones.id_proyecto = proyectos.id_proyecto
+    LEFT JOIN empresas on empresas.id_empresa = proyectos.id_empresa
     GROUP BY proyectos.id_proyecto
     ORDER BY proyectos.id_proyecto ASC limit 3");
     $sth->execute();
     $todos = $sth->fetchAll();
-    //header("Access-Control-Allow-Origin: http://localhost:5500"); // caso con URI
     header("Access-Control-Allow-Origin: *");
     return $this->response->withJson($todos);
 });
-
-
-// $app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-    //$this->logger->info("Slim-Skeleton '/' route");
-    //return $this->renderer->render($response, 'index.phtml', $args);
-// });
