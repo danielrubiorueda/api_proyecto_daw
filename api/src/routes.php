@@ -85,7 +85,7 @@ $app->get('/api/proyectos', function ($request, $response, $args) {
     return $this->response->withJson($todos);
 });
 
-// get proyectos
+// inicio
 $app->get('/api/inicio', function ($request, $response, $args) {
     $sth = $this->db->prepare("SELECT proyectos.*, ifnull(sum(contribucion),0) as contribucion, empresas.* FROM proyectos 
     LEFT JOIN contribuciones on contribuciones.id_proyecto = proyectos.id_proyecto
@@ -98,7 +98,7 @@ $app->get('/api/inicio', function ($request, $response, $args) {
     return $this->response->withJson($todos);
 });
 
-$app->get('/api/illo', function ($request, $response, $args) {
+$app->get('/api/strava', function ($request, $response, $args) {
 
     $curl = curl_init();
 
@@ -111,21 +111,21 @@ $app->get('/api/illo', function ($request, $response, $args) {
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "POST",
     CURLOPT_HTTPHEADER => array(
-        "Cache-Control: no-cache",
-        "Postman-Token: d52469cd-65f0-4b10-842b-d22059639096"
+        "Cache-Control: no-cache"
     ),
     ));
 
-    $response = curl_exec($curl);
+    $curl_response = curl_exec($curl);
     $err = curl_error($curl);
 
     curl_close($curl);
 
     if ($err) {
-    header('location: http://127.0.0.1:5500/');
+    // $app->response->redirect('location: http://127.0.0.1:5500/');
+        return $response->withHeader('Location', 'http://127.0.0.1:5500/');
     } else {
-        $response = json_decode($response);
-        return $response->withRedirect('http://127.0.0.1:5500/?'.http_build_query($response));
+        $curl_response = json_decode($curl_response);
+        return $response->withHeader('Location', 'http://127.0.0.1:5500/donacion/?'.http_build_query($curl_response));
     }
 
 });

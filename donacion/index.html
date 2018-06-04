@@ -56,7 +56,7 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Busca un proyecto" aria-label="Search">
-                    <button class="btn my-2 my-sm-0" type="submit">Buscar</button>
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
                 </form>
             </div>
         </nav>
@@ -71,9 +71,12 @@
                     <p class="text-center">Poco a poco entre todos podemos lograrlo todo</p>
                 </div>
             </div>
-            <p class="text-center">
-                <a class="btn btn-success btn-lg" href="" id="stravalink" role="button">Conecta con Strava</a>
-            </p>
+            <div class="container text-center" id="boxpersona">
+                <span class="perfil lima"></span>
+                <h2>Hola </h2>
+                <p>¿Te has movido en las últimas 24 horas?</p>
+                <a class="btn btn-success btn-lg stravalink" role="button">Conecta con Strava</a>
+            </div>
         </div>
 
         <div id="colabora">
@@ -112,7 +115,7 @@
                             mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
                             mollis euismod. Donec sed odio dui. </p>
                         <p>
-                            <a class="btn btn-secondary" href="/donacion" role="button">Dona tus KMs</a>
+                            <a class="btn btn-success stravalink" href="/donacion" role="button">Conecta con Strava</a>
                         </p>
                     </div>
                 </div>
@@ -124,17 +127,24 @@
     <footer class="text-center">
         <p>&copy; SoliRun 2018</p>
     </footer>
-
     <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <script src="/resources/js/popper.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
     <script src="/resources/js/script.js"></script>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#stravalink').attr('href', linkAuth)
+    <script>
+        var parametros = decodeURIComponent(location.search).split('&');
+        var access_token = parametros[0].split('=')[1];
+        var id_alumno = parametros[2].split('=')[1];
+        var nombre_alumno = parametros[4].split('=')[1];
+        var perfil_alumno = parametros[15].split('=')[1];
+        $(function(){
+            $('#boxpersona h2').append(nombre_alumno);
+            $('#boxpersona .perfil').css('background','url('+perfil_alumno+')');
+            $.get(linkAct+access_token)
+            .done(function(respuesta){
+                console.log(respuesta);
+            });
         });
     </script>
 </body>
-
 </html>

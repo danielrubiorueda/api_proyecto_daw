@@ -24,6 +24,13 @@
     color: #ff322e;
     cursor: pointer;
 }
+.lima{
+    color: #c7d099;
+}
+.btn-success{
+    border-color: #a3b545 !important;
+    background-color: #a3b545 !important;
+}
 #navbar a:hover {
     color: #262626;
 }
@@ -93,6 +100,15 @@ footer p{
 
 main#inicio {
     margin-top: -2em;
+}
+
+.perfil {
+    width: 7em;
+    height: 7em;
+    background-size: cover !important;
+    border-radius: 10em;
+    border: solid;
+    display: inline-block;
 }
 
 @media screen and (max-width: 600px){

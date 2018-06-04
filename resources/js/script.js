@@ -1,5 +1,7 @@
 $(function () {
 
+    $('.stravalink').attr('href', linkAuth);
+
     $("a").click(function (e) {
         var aid = $(this).attr("href");
         if (aid.indexOf("#") != -1) e.preventDefault();
@@ -43,22 +45,10 @@ function cardProyecto(r){
     return elemento;
 }
 
+var ahora = Math.round(new Date().getTime()/1000.0);
+var ayer = ahora - 86400;
+var linkAct = "https://www.strava.com/api/v3/athlete/activities?before=1537837557&after=1527753600&access_token=";
+//var linkAct = "https://www.strava.com/api/v3/athlete/activities?before="+ahora+"&after="+ayer+"&access_token=";
 var idapp = '26016';
-// var secret = '43476f02df28fd7a7a5f6cd7aba18618d3f41b5d';
-var redirect = 'http://localhost/fct/api/public/api/illo';
+var redirect = 'http://localhost/fct/api/public/api/strava';
 var linkAuth = 'https://www.strava.com/oauth/authorize?client_id='+idapp+'&response_type=code&approval_prompt=force&redirect_uri='+redirect;
-
-if(location.search != '' && location.search.indexOf('code=')) {
-    var code = location.search.split('code=')[1].split('&')[0];
-    var postAthlete = 'https://www.strava.com/oauth/token?client_id='+idapp+'&client_secret='+secret+'&code='+code;
-    $.post(postAthlete).done(function (athToken) {
-        var access_token = athToken.access_token;
-        var ahora = Math.round(new Date().getTime()/1000.0);
-        var ayer = ahora - 86400;
-        var getActividad = 'https://www.strava.com/api/v3/athlete/activities?before='+ahora+'&after='+ayer+'&access_token='+access_token;
-        $.get(getActividad).done(function (actividad) {
-            console.log(actividad);
-        });
-        // var getAthlete = 'https://www.strava.com/api/v3/athlete?access_token='+access_token;
-    });
-}
