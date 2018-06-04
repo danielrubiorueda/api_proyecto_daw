@@ -65,11 +65,38 @@ $app->get('/api/contribuciones', function ($request, $response, $args) {
 });
 
 // get proyecto
-$app->get('/api/proyectos/{id}', function ($request, $response, $args) {
-    $sth = $this->db->prepare("SELECT * FROM proyectos WHERE id_proyecto = ".$args['id']);
+$app->post('/api/donacion', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    
+    $sth = $this->db->prepare("SELECT max(id_contribucion), fecha_contribucion from contribuciones where id_alumno = ".$_POST['idalumno']);
+    $sth->execute();
+    $fecha = $sth->fetch();
+    $fecha = $fecha['fecha_contribucion'];
+    if(date(time() - 60 * 60 * 24) < strtotime($fecha)){
+        return $this->response->withJson('Espera');
+    }
+    $sth = $this->db->prepare("SELECT proyectos.id_proyecto, round(ifnull(sum(contribucion),0)/objetivo,2) as progreso ,round(objetivo-ifnull(sum(contribucion),0),2) as resta FROM proyectos 
+    LEFT JOIN contribuciones on contribuciones.id_proyecto = proyectos.id_proyecto
+    GROUP BY proyectos.id_proyecto
+    ORDER BY progreso DESC, proyectos.id_proyecto ASC");
     $sth->execute();
     $todos = $sth->fetchAll();
-    return $this->response->withJson($todos);
+    $donacion = $_POST["donacion"];
+    $query = '';
+    $sobrante = 0;
+    foreach ($todos as $value) {
+        $sobrante;
+        $auxdonacion = $donacion / 2;
+        $auxdonacion += $sobrante;
+        $donacion = ($value["resta"] < $auxdonacion) ? $value["resta"] : $auxdonacion ;
+        $sobrante = ($value["resta"] < $auxdonacion) ? $auxdonacion-$value["resta"] : 0 ;
+        $query = "INSERT INTO `fct`.`contribuciones` (`id_alumno`, `id_proyecto`, `contribucion`) VALUES ('".$_POST['idalumno']."', '".$value["id_proyecto"]."', '".$donacion."');";
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+    }
+    $sth = $this->db->prepare($query);
+    $sth->execute();
+    return $this->response->withJson('Gracias!');
 });
 
 // get proyectos

@@ -76,12 +76,13 @@
                 <h2>Hola </h2>
                 <p></p>
                 <div class="d-inline-block card" style="width: 20rem">
-                    <div class="card-body">
+                    <form id="form-donacion" class="card-body">
                         <p>
-                            <input type="text" class="form-control" placeholder="Id de Alumno">
+                            <input type="hidden" name="donacion">
+                            <input name="idalumno" type="text" class="form-control" placeholder="Id de Alumno">
                         </p>
-                        <a class="btn btn-success btn-lg stravalink" role="button">Auto-repartir KMs</a>
-                    </div>
+                        <input type="submit" onclick="enviadonacion(event)" class="btn btn-success btn-lg stravalink" role="button" value="Auto-repartir KMs">
+                    </form>
                 </div>
             </div>
         </div>
@@ -145,6 +146,15 @@
         var nombre_alumno = parametros[4].split('=')[1];
         var perfil_alumno = parametros[15].split('=')[1];
         var distanciaTotal = 0;
+
+        function enviadonacion(e){
+            e.preventDefault();
+            $.post('http://127.0.0.1/fct/api/public/api/donacion', $('#form-donacion').serialize())
+            .done(function(r){
+                alert(r);
+            });
+        }
+
         $(function(){
             $('#boxpersona h2').html('¡Hola '+nombre_alumno+'!');
             $('#boxpersona .perfil').css('background','url('+perfil_alumno+')');
@@ -155,6 +165,7 @@
                     distanciaTotal += e.distance/1000;
                 });
                 $('#boxpersona > p').html('En las últimas 24 horas has recorrido '+distanciaTotal+' kms');
+                $('input[name="donacion"]').val(distanciaTotal);
             });
         });
     </script>
