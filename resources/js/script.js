@@ -35,7 +35,7 @@ function cardProyecto(r){
         '<img class="card-img-top" src="/resources/img/' + e.img_proyecto + '" alt="' + e.proyecto + '">' +
         '<div class="card-body">' +
         '<h5 class="card-title">' + e.proyecto + '</h5>' +
-        '<p>¡Faltan ' + (e.objetivo - e.contribucion) + 'km para la meta!</p>' +
+        '<p>¡Faltan ' + Math.round(100*(e.objetivo - e.contribucion))/100 + 'km para la meta!</p>' +
         '<div class="progreso"><span style="width:'+(e.contribucion/e.objetivo*100)+'%"><span></div>'+
         '<p class="card-text">' + e.descripcion_proyecto + ' <a target="_blank" href="https://www.instagram.com/explore/tags/' + e.hashtag_proyecto + '/">#' + e.hashtag_proyecto + '</a></p>' +
         '<p class="card-text donacion">' + e.donacion + '€</p>' +

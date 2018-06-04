@@ -48,7 +48,7 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a href="#proyectos" class="nav-link">Proyectos</a>
+                        <a href="/proyectos" class="nav-link">Proyectos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href='#colabora'>Colabora</a>
@@ -74,8 +74,15 @@
             <div class="container text-center" id="boxpersona">
                 <span class="perfil lima"></span>
                 <h2>Hola </h2>
-                <p>¿Te has movido en las últimas 24 horas?</p>
-                <a class="btn btn-success btn-lg stravalink" role="button">Conecta con Strava</a>
+                <p></p>
+                <div class="d-inline-block card" style="width: 20rem">
+                    <div class="card-body">
+                        <p>
+                            <input type="text" class="form-control" placeholder="Id de Alumno">
+                        </p>
+                        <a class="btn btn-success btn-lg stravalink" role="button">Auto-repartir KMs</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -137,12 +144,17 @@
         var id_alumno = parametros[2].split('=')[1];
         var nombre_alumno = parametros[4].split('=')[1];
         var perfil_alumno = parametros[15].split('=')[1];
+        var distanciaTotal = 0;
         $(function(){
-            $('#boxpersona h2').append(nombre_alumno);
+            $('#boxpersona h2').html('¡Hola '+nombre_alumno+'!');
             $('#boxpersona .perfil').css('background','url('+perfil_alumno+')');
             $.get(linkAct+access_token)
             .done(function(respuesta){
                 console.log(respuesta);
+                respuesta.forEach(function(e){
+                    distanciaTotal += e.distance/1000;
+                });
+                $('#boxpersona > p').html('En las últimas 24 horas has recorrido '+distanciaTotal+' kms');
             });
         });
     </script>
