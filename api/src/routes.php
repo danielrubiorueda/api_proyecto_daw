@@ -73,7 +73,7 @@ $app->post('/api/donacion', function ($request, $response, $args) {
     $fecha = $sth->fetch();
     $fecha = $fecha['fecha_contribucion'];
     if(date(time() - 60 * 60 * 24) < strtotime($fecha)){
-        return $this->response->withJson('Espera');
+        return $this->response->withJson('0');
     }
     $sth = $this->db->prepare("SELECT proyectos.id_proyecto, round(ifnull(sum(contribucion),0)/objetivo,2) as progreso ,round(objetivo-ifnull(sum(contribucion),0),2) as resta FROM proyectos 
     LEFT JOIN contribuciones on contribuciones.id_proyecto = proyectos.id_proyecto
@@ -96,7 +96,7 @@ $app->post('/api/donacion', function ($request, $response, $args) {
     }
     $sth = $this->db->prepare($query);
     $sth->execute();
-    return $this->response->withJson('Gracias!');
+    return $this->response->withJson('1');
 });
 
 // get proyectos

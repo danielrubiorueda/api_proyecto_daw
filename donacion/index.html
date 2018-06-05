@@ -77,10 +77,6 @@
                 <p></p>
                 <div class="d-inline-block card" style="width: 20rem">
                     <form id="form-donacion" class="card-body">
-                        <p>
-                            <input type="hidden" name="donacion">
-                            <input name="idalumno" type="text" class="form-control" placeholder="Id de Alumno">
-                        </p>
                         <input type="submit" onclick="enviadonacion(event)" class="btn btn-success btn-lg stravalink" role="button" value="Auto-repartir KMs">
                     </form>
                 </div>
@@ -151,7 +147,17 @@
             e.preventDefault();
             $.post('http://127.0.0.1/fct/api/public/api/donacion', $('#form-donacion').serialize())
             .done(function(r){
-                alert(r);
+                if(r == 0){
+                    $('#boxpersona').append('<div class="alert alert-danger alert-dismissible">'+
+                    ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
+                    ' <strong>Tienes que esperar un poco :(</strong> Sólo puedes hacer tus donaciones cada 24 horas, esta carrera sólo se gana día a día.'+
+                    '</div>');
+                } else {
+                    $('#boxpersona').append('<div class="alert alert-success alert-dismissible">'+
+                    ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
+                    ' <strong>Muchas gracias por tus KMs :)</strong> cada día estamos un poco más cerca de cumplir nuestros retos.'+
+                    '</div>');
+                }
             });
         }
 
@@ -165,7 +171,8 @@
                     distanciaTotal += e.distance/1000;
                 });
                 $('#boxpersona > p').html('En las últimas 24 horas has recorrido '+distanciaTotal+' kms');
-                $('input[name="donacion"]').val(distanciaTotal);
+                $('#form-donacion').append('<input name="donacion" type="hidden" value="'+distanciaTotal+'">');
+                $('#form-donacion').append('<input name="idalumno" type="hidden" value="'+id_alumno+'">');
             });
         });
     </script>
