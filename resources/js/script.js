@@ -19,7 +19,44 @@ $(function () {
 
     $('#loader').fadeOut(500);
 
+    contacto();
+
 });
+
+function contacto(){
+    $modal = '<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="formulario"> <div class="modal-dialog" role="document"> <div class="modal-content"> <div class="modal-body"> <div class="form-area"> <form role="form"> <div class="form-group"> <input type="text" class="form-control" id="org" name="org" placeholder="Organización" required> </div> <div class="form-group"> <input type="text" class="form-control" id="email" name="email" placeholder="Email" required> </div> <div class="form-group"> <textarea required name="msg" class="form-control" type="textarea" id="message" placeholder="Mensaje" maxlength="140" rows="7"></textarea> <span class="help-block"> <p id="characterLeft" class="help-block "></p> </span> </div> <button type="button" class="btn btn-secondary" data-dismiss="modal">No, gracias</button> <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Envia el mensaje</button> </form> </div> </div> </div> </div> </div>';
+    $('body').append($modal);
+    // clicks
+    $('.contacto').on('click', function (e) {
+        e.preventDefault();
+        $('#formulario').modal('show');
+    });
+    // Formulario 
+    $('#characterLeft').text('Te quedan 140 caracteres');
+    $('#message').keydown(function () {
+        var max = 140;
+        var len = $(this).val().length;
+        if (len >= max) {
+            $('#characterLeft').text('Has llegado al límite');
+            $('#characterLeft').addClass('red');
+            $('#btnSubmit').addClass('disabled');
+        }
+        else {
+            var ch = max - len;
+            $('#characterLeft').text('Te quedan ' + ch + ' caracteres');
+            $('#btnSubmit').removeClass('disabled');
+            $('#characterLeft').removeClass('red');
+        }
+    });
+    $('#formulario form').on('submit', function (e) {
+       e.preventDefault();
+       $.post('http://127.0.0.1/fct/api/public/api/mensaje', $(this).serialize())
+       .done(function (r) {
+            $('#formulario').modal('hide');
+       });
+    });
+    
+}
 
 function cardProyecto(r){
     var elemento = [];

@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `contribuciones` (
   KEY `id_proyecto` (`id_proyecto`),
   CONSTRAINT `contribuciones_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `contribuciones_ibfk_2` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `contribuciones` DISABLE KEYS */;
 /*!40000 ALTER TABLE `contribuciones` ENABLE KEYS */;
@@ -77,6 +77,18 @@ CREATE TABLE IF NOT EXISTS `empresas` (
 INSERT IGNORE INTO `empresas` (`id_empresa`, `www_empresa`, `empresa`, `descripcion_empresa`, `img_empresa`) VALUES
 	(1, 'www', 'empresa', 'descripcion', 'img');
 /*!40000 ALTER TABLE `empresas` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `mensajes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `org` tinytext NOT NULL,
+  `msg` tinytext NOT NULL,
+  `email` tinytext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `mensajes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mensajes` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `proyectos` (
   `id_proyecto` int(11) NOT NULL,
