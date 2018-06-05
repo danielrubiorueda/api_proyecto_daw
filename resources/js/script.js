@@ -2,12 +2,6 @@ $(function () {
 
     $('.stravalink').attr('href', linkAuth);
 
-    $("a").click(function (e) {
-        var aid = $(this).attr("href");
-        if (aid.indexOf("#") != -1) e.preventDefault();
-        $('html,body').animate({ scrollTop: $(aid).offset().top }, 'slow');
-    });
-
     // carga css en diferido
     var cssd = document.createElement('link');
     cssd.rel = 'stylesheet';
