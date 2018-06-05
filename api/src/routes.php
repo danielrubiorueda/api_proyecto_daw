@@ -75,10 +75,10 @@ $app->post('/api/donacion', function ($request, $response, $args) {
     if(date(time() - 60 * 60 * 24) < strtotime($fecha)){
         return $this->response->withJson('0');
     }
-    $sth = $this->db->prepare("SELECT proyectos.id_proyecto, round(ifnull(sum(contribucion),0)/objetivo,2) as progreso ,round(objetivo-ifnull(sum(contribucion),0),2) as resta FROM proyectos 
+    $sth = $this->db->prepare("SELECT proyectos.id_proyecto, round(objetivo-ifnull(sum(contribucion),0),2) as resta FROM proyectos 
     LEFT JOIN contribuciones on contribuciones.id_proyecto = proyectos.id_proyecto
     GROUP BY proyectos.id_proyecto
-    ORDER BY progreso DESC, proyectos.id_proyecto ASC");
+    ORDER BY proyectos.id_proyecto ASC");
     $sth->execute();
     $todos = $sth->fetchAll();
     $donacion = $_POST["donacion"];
@@ -148,7 +148,6 @@ $app->get('/api/strava', function ($request, $response, $args) {
     curl_close($curl);
 
     if ($err) {
-    // $app->response->redirect('location: http://127.0.0.1:5500/');
         return $response->withHeader('Location', 'http://127.0.0.1:5500/');
     } else {
         $curl_response = json_decode($curl_response);

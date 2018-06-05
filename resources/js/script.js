@@ -47,8 +47,7 @@ function cardProyecto(r){
 
 var ahora = Math.round(new Date().getTime()/1000.0);
 var ayer = ahora - 86400;
-var linkAct = "https://www.strava.com/api/v3/athlete/activities?before=1537837557&after=1527753600&access_token=";
-//var linkAct = "https://www.strava.com/api/v3/athlete/activities?before="+ahora+"&after="+ayer+"&access_token=";
+var linkAct = "https://www.strava.com/api/v3/athlete/activities?before="+ahora+"&after="+ayer+"&access_token=";
 var idapp = '26016';
 var redirect = 'http://localhost/fct/api/public/api/strava';
 var linkAuth = 'https://www.strava.com/oauth/authorize?client_id='+idapp+'&response_type=code&approval_prompt=force&redirect_uri='+redirect;

@@ -111,6 +111,12 @@ main#inicio {
     display: inline-block;
 }
 
+#proyectos .card {
+    width: 95%;
+    max-width: 25em;
+    margin: 5px 0;
+}
+
 @media screen and (max-width: 600px){
     .jumbotron.inicio {
         background-image: url(../img/1s.jpg);
