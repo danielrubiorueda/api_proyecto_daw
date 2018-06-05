@@ -68,13 +68,22 @@ $app->get('/api/contribuciones', function ($request, $response, $args) {
 $app->post('/api/donacion', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     
+    // comprueba si el alumno está registrado
+    $sth = $this->db->prepare("SELECT id_alumno from alumnos where id_alumno = ".$_POST['idalumno']);
+    $sth->execute();
+    if(!$respuesta = $sth->fetch()){
+        return $this->response->withJson('1');
+    }
+
+    // comprueba si hay donación en las últimas 24 horas
     $sth = $this->db->prepare("SELECT max(id_contribucion), fecha_contribucion from contribuciones where id_alumno = ".$_POST['idalumno']);
     $sth->execute();
-    $fecha = $sth->fetch();
-    $fecha = $fecha['fecha_contribucion'];
-    if(date(time() - 60 * 60 * 24) < strtotime($fecha)){
-        return $this->response->withJson('0');
+    $respuesta = $sth->fetch();
+    $respuesta = $respuesta['fecha_contribucion'];
+    if(date(time() - 60 * 60 * 24) < strtotime($respuesta)){
+        return $this->response->withJson('2');
     }
+
     $sth = $this->db->prepare("SELECT proyectos.id_proyecto, round(objetivo-ifnull(sum(contribucion),0),2) as resta FROM proyectos 
     LEFT JOIN contribuciones on contribuciones.id_proyecto = proyectos.id_proyecto
     GROUP BY proyectos.id_proyecto
@@ -96,7 +105,7 @@ $app->post('/api/donacion', function ($request, $response, $args) {
     }
     $sth = $this->db->prepare($query);
     $sth->execute();
-    return $this->response->withJson('1');
+    return $this->response->withJson('0');
 });
 
 // get proyectos

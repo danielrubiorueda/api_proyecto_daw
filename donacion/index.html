@@ -143,7 +143,12 @@
             e.preventDefault();
             $.post('http://127.0.0.1/fct/api/public/api/donacion', $('#form-donacion').serialize())
             .done(function(r){
-                if(r == 0){
+                if (r == 1) {
+                    $('#boxpersona').append('<div class="alert alert-danger alert-dismissible">'+
+                    ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
+                    ' <strong>No estás en la lista :(</strong> Comprueba con tu responsable si estás en la lista con tu ID de Strava.'+
+                    '</div>');
+                } else if(r == 2){
                     $('#boxpersona').append('<div class="alert alert-danger alert-dismissible">'+
                     ' <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
                     ' <strong>Tienes que esperar un poco :(</strong> Sólo puedes hacer tus donaciones cada 24 horas, esta carrera sólo se gana día a día.'+

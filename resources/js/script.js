@@ -38,7 +38,7 @@ function cardProyecto(r){
         '<p>¡Faltan ' + Math.round(100*(e.objetivo - e.contribucion))/100 + 'km para la meta!</p>' +
         '<div class="progreso"><span style="width:'+(e.contribucion/e.objetivo*100)+'%"><span></div>'+
         '<p class="card-text">' + e.descripcion_proyecto + ' <a target="_blank" href="https://www.instagram.com/explore/tags/' + e.hashtag_proyecto + '/">#' + e.hashtag_proyecto + '</a></p>' +
-        '<p class="card-text donacion">' + e.donacion + '€</p>' +
+        '<p class="card-text donacion">Donación ' + e.donacion + '€</p>' +
         '<p class="card-text">Patrocinado por <a href="' + e.www_empresa + '" target="_blank">' + e.empresa + '</a></p>' +
         '</div></div></div>');
     });

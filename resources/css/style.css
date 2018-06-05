@@ -89,13 +89,12 @@ footer p{
 }
 
 .card-text.donacion {
-    font-size: 1.5em;
+    font-size: 1.3em;
     text-align: center;
     font-weight: bold;
-    color: #ffffff;
-    background: linear-gradient(#81a90b, #637d14, #81a90b);
+    color: #a1b75c;
     border-radius: 10px;
-    border: solid 1px #42540b;
+    border: solid 2px #a1b75c;
 }
 
 main#inicio {
