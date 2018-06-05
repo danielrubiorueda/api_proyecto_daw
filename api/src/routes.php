@@ -116,3 +116,73 @@ $app->get('/api/strava', function ($request, $response, $args) {
     }
 
 });
+
+
+// admin
+
+
+// alumnos
+$app->get('/api/alumnos', function ($request, $response, $args) {
+    
+    header("Access-Control-Allow-Origin: *");
+    
+    $sth = $this->db->prepare("SELECT * FROM alumnos");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// cursos
+$app->get('/api/cursos', function ($request, $response, $args) {
+    
+    header("Access-Control-Allow-Origin: *");
+    
+    $sth = $this->db->prepare("SELECT * FROM cursos");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// causas
+$app->get('/api/causas', function ($request, $response, $args) {
+    
+    header("Access-Control-Allow-Origin: *");
+    
+    $sth = $this->db->prepare("SELECT * FROM causas");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// mensajes
+$app->get('/api/mensajes', function ($request, $response, $args) {
+    
+    header("Access-Control-Allow-Origin: *");
+    
+    $sth = $this->db->prepare("SELECT * FROM mensajes");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// empresas
+$app->get('/api/empresas', function ($request, $response, $args) {
+    
+    header("Access-Control-Allow-Origin: *");
+    
+    $sth = $this->db->prepare("SELECT * FROM empresas");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});
+
+// proyectos
+$app->get('/api/editproyectos', function ($request, $response, $args) {
+    
+    header("Access-Control-Allow-Origin: *");
+    
+    $sth = $this->db->prepare("SELECT * FROM proyectos");
+    $sth->execute();
+    $todos = $sth->fetchAll();
+    return $this->response->withJson($todos);
+});

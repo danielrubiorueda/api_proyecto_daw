@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
   `id_curso` int(11) NOT NULL,
   PRIMARY KEY (`id_alumno`),
   KEY `id_curso` (`id_curso`),
-  CONSTRAINT `alumnos_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_alumnos_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `alumnos` DISABLE KEYS */;
@@ -18,13 +18,13 @@ INSERT IGNORE INTO `alumnos` (`id_alumno`, `id_curso`) VALUES
 /*!40000 ALTER TABLE `alumnos` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `causas` (
-  `id_causa` int(11) NOT NULL,
+  `id_causa` int(11) NOT NULL AUTO_INCREMENT,
   `www_causa` varchar(200) NOT NULL,
   `causa` varchar(100) NOT NULL,
   `descripcion_causa` varchar(800) NOT NULL,
   `img_causa` varchar(200) NOT NULL,
   PRIMARY KEY (`id_causa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `causas` DISABLE KEYS */;
 INSERT IGNORE INTO `causas` (`id_causa`, `www_causa`, `causa`, `descripcion_causa`, `img_causa`) VALUES
@@ -40,22 +40,22 @@ CREATE TABLE IF NOT EXISTS `contribuciones` (
   PRIMARY KEY (`id_contribucion`),
   KEY `id_alumno` (`id_alumno`,`id_proyecto`),
   KEY `id_proyecto` (`id_proyecto`),
-  CONSTRAINT `contribuciones_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `contribuciones_ibfk_2` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_contribuciones_alumnos` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`),
+  CONSTRAINT `FK_contribuciones_proyectos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`)
 ) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `contribuciones` DISABLE KEYS */;
 /*!40000 ALTER TABLE `contribuciones` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `cursos` (
-  `id_curso` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL AUTO_INCREMENT,
   `curso` varchar(50) NOT NULL,
   `nivel` varchar(50) NOT NULL,
   `centro` varchar(100) NOT NULL,
   `localidad` varchar(100) NOT NULL,
   `provincia` varchar(100) NOT NULL,
   PRIMARY KEY (`id_curso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `cursos` DISABLE KEYS */;
 INSERT IGNORE INTO `cursos` (`id_curso`, `curso`, `nivel`, `centro`, `localidad`, `provincia`) VALUES
@@ -65,13 +65,13 @@ INSERT IGNORE INTO `cursos` (`id_curso`, `curso`, `nivel`, `centro`, `localidad`
 /*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `empresas` (
-  `id_empresa` int(11) NOT NULL,
+  `id_empresa` int(11) NOT NULL AUTO_INCREMENT,
   `www_empresa` varchar(200) NOT NULL,
   `empresa` varchar(100) NOT NULL,
   `descripcion_empresa` varchar(500) NOT NULL,
   `img_empresa` varchar(200) NOT NULL,
   PRIMARY KEY (`id_empresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `empresas` DISABLE KEYS */;
 INSERT IGNORE INTO `empresas` (`id_empresa`, `www_empresa`, `empresa`, `descripcion_empresa`, `img_empresa`) VALUES
@@ -85,13 +85,15 @@ CREATE TABLE IF NOT EXISTS `mensajes` (
   `msg` tinytext NOT NULL,
   `email` tinytext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `mensajes` DISABLE KEYS */;
+INSERT IGNORE INTO `mensajes` (`id`, `fecha`, `org`, `msg`, `email`) VALUES
+	(4, '2018-06-05 13:55:21', 'Minabo', 'Quiero participar como empresa y donar 10000€', 'hola@minabo.com');
 /*!40000 ALTER TABLE `mensajes` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `proyectos` (
-  `id_proyecto` int(11) NOT NULL,
+  `id_proyecto` int(11) NOT NULL AUTO_INCREMENT,
   `id_causa` int(11) NOT NULL,
   `id_empresa` int(11) NOT NULL,
   `proyecto` varchar(100) NOT NULL,
@@ -106,9 +108,9 @@ CREATE TABLE IF NOT EXISTS `proyectos` (
   UNIQUE KEY `hashtag_proyecto` (`hashtag_proyecto`),
   KEY `id_causa` (`id_causa`,`id_empresa`),
   KEY `id_empresa` (`id_empresa`),
-  CONSTRAINT `proyectos_ibfk_1` FOREIGN KEY (`id_causa`) REFERENCES `causas` (`id_causa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `proyectos_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `empresas` (`id_empresa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_proyectos_causas` FOREIGN KEY (`id_causa`) REFERENCES `causas` (`id_causa`),
+  CONSTRAINT `FK_proyectos_empresas` FOREIGN KEY (`id_empresa`) REFERENCES `empresas` (`id_empresa`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
 INSERT IGNORE INTO `proyectos` (`id_proyecto`, `id_causa`, `id_empresa`, `proyecto`, `descripcion_proyecto`, `img_proyecto`, `objetivo`, `fecha_inicio`, `fecha_fin`, `hashtag_proyecto`, `donacion`) VALUES

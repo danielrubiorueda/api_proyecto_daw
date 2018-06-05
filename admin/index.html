@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+</head>
+
+<body class="container">
+    <div class="row">
+        <h2>Panel de administración</h2>
+    </div>
+    
+    <div class="row m-2 card card-body">
+        <h3>Cursos</h3>
+        <table id="cursos" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id Curso</th>
+                    <th>Curso</th>
+                    <th>Nivel</th>
+                    <th>Centro</th>
+                    <th>Localidad</th>
+                    <th>Provincia</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="row m-2 card card-body">
+        <h3>Causas</h3>
+        <table id="causas" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id Causa</th>
+                    <th>Nombre</th>
+                    <th>WWW</th>
+                    <th>Descripción</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="row m-2 card card-body">
+        <h3>Mensajes</h3>
+        <table id="mensajes" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Organización</th>
+                    <th>Mensaje</th>
+                    <th>Remitente</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="row col-lg-9 m-2 card card-body">
+        <h3>Alumnos</h3>
+        <table id="alumnos" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id Strava</th>
+                    <th>Id Curso</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+        
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            
+            $('#alumnos').DataTable({
+                ordering: false,
+                ajax: {
+                    url: 'http://localhost/fct/api/public/api/alumnos',
+                    dataSrc: ''
+                },
+                columns:[
+                { data: 'id_alumno' },
+                { data: 'id_curso' }
+                ],
+                lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
+            });
+
+            
+            $('#cursos').DataTable({
+                ajax: {
+                    url: 'http://localhost/fct/api/public/api/cursos',
+                    dataSrc: ''
+                },
+                columns:[
+                { data: 'id_curso' },
+                { data: 'curso' },
+                { data: 'nivel' },
+                { data: 'centro' },
+                { data: 'localidad' },
+                { data: 'provincia' },
+                ],
+                lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
+            });
+
+            
+            $('#causas').DataTable({
+                ajax: {
+                    url: 'http://localhost/fct/api/public/api/causas',
+                    dataSrc: ''
+                },
+                columns:[
+                { data: 'id_causa' },
+                { data: 'causa' },
+                { data: 'www_causa' },
+                { data: 'descripcion_causa' },
+                { data: 'img_causa' },
+                ],
+                lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
+            });
+
+            
+            $('#mensajes').DataTable({
+                sorting: false,
+                ajax: {
+                    url: 'http://localhost/fct/api/public/api/mensajes',
+                    dataSrc: ''
+                },
+                columns:[
+                { data: 'id' },
+                { data: 'fecha' },
+                { data: 'org' },
+                { data: 'msg' },
+                { data: 'email' },
+                ],
+                lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
+            });
+
+            $('table').on( 'click', function ( e ) {
+                //console.log(e);
+                console.log(e.target.parentElement.firstChild.innerText);
+            } );
+
+        });
+    </script>
+</body>
+
+</html>
