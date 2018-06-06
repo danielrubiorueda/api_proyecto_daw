@@ -31,6 +31,19 @@ INSERT IGNORE INTO `causas` (`id_causa`, `www_causa`, `causa`, `descripcion_caus
 	(1, 'www', 'causa', 'descripcion', 'img');
 /*!40000 ALTER TABLE `causas` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `centros` (
+  `id_centro` int(11) NOT NULL AUTO_INCREMENT,
+  `centro` varchar(50) DEFAULT NULL,
+  `localidad` varchar(50) DEFAULT NULL,
+  `provincia` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_centro`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `centros` DISABLE KEYS */;
+INSERT IGNORE INTO `centros` (`id_centro`, `centro`, `localidad`, `provincia`) VALUES
+	(1, 'IES Mar de Alboran', 'Estepona', 'Málaga');
+/*!40000 ALTER TABLE `centros` ENABLE KEYS */;
+
 CREATE TABLE IF NOT EXISTS `contribuciones` (
   `id_contribucion` int(11) NOT NULL AUTO_INCREMENT,
   `id_alumno` int(11) NOT NULL,
@@ -50,18 +63,18 @@ CREATE TABLE IF NOT EXISTS `contribuciones` (
 CREATE TABLE IF NOT EXISTS `cursos` (
   `id_curso` int(11) NOT NULL AUTO_INCREMENT,
   `curso` varchar(50) NOT NULL,
-  `nivel` varchar(50) NOT NULL,
-  `centro` varchar(100) NOT NULL,
-  `localidad` varchar(100) NOT NULL,
-  `provincia` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_curso`)
+  `nivel` enum('Primaria','ESO','Bachiller','FP') NOT NULL,
+  `id_centro` int(11) NOT NULL,
+  PRIMARY KEY (`id_curso`),
+  KEY `FK_cursos_centros` (`id_centro`),
+  CONSTRAINT `FK_cursos_centros` FOREIGN KEY (`id_centro`) REFERENCES `centros` (`id_centro`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `cursos` DISABLE KEYS */;
-INSERT IGNORE INTO `cursos` (`id_curso`, `curso`, `nivel`, `centro`, `localidad`, `provincia`) VALUES
-	(1, 'bch', '1_a', 'IES Mar de Alboran', 'Estepona', 'Málaga');
-INSERT IGNORE INTO `cursos` (`id_curso`, `curso`, `nivel`, `centro`, `localidad`, `provincia`) VALUES
-	(2, 'bch', '1_b', 'IES Mar de Alboran', 'Estepona', 'Málaga');
+INSERT IGNORE INTO `cursos` (`id_curso`, `curso`, `nivel`, `id_centro`) VALUES
+	(1, '1a', 'Bachiller', 1);
+INSERT IGNORE INTO `cursos` (`id_curso`, `curso`, `nivel`, `id_centro`) VALUES
+	(2, '1b', 'Bachiller', 1);
 /*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `empresas` (
