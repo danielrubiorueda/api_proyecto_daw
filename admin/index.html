@@ -17,10 +17,13 @@
             background-repeat: no-repeat;
             background-size: 125em 94em;
         }
-        .card.card-body  {
+        .card.card-body {
             background: rgba(0, 0, 0, 0.2) !important;
             color: #dff;
             padding: 0.5em;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
         }
         label {
             text-transform: capitalize;
@@ -28,6 +31,12 @@
         table, tr, td, th {
             border: none !important;
             font-size: 14px;
+        }
+        .col-sm-12 {
+            padding: 0;
+        }
+        @media screen and (min-width: 600px){
+            h3{position: absolute;}
         }
     </style>
 </head>
