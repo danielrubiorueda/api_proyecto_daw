@@ -17,19 +17,24 @@
             background-repeat: no-repeat;
             background-size: 125em 94em;
         }
-        table, .card.card-body  {
+        .card.card-body  {
             background: rgba(0, 0, 0, 0.2) !important;
             color: #dff;
+            padding: 0.5em;
         }
         label {
             text-transform: capitalize;
+        }
+        table, tr, td, th {
+            border: none !important;
+            font-size: 14px;
         }
     </style>
 </head>
 
 <body class="container">
 
-    <div class="row m-2 card card-body">
+    <div class="row mt-2 card card-body">
         <h3>Mensajes</h3>
         <table id="mensajes" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -43,13 +48,11 @@
         </table>
     </div>
     
-    <div class="row m-2 card card-body">
-        <h3>Cursos</h3>
-        <table id="cursos" class="table table-striped table-bordered" style="width:100%">
+    <div class="row mt-2 card card-body">
+        <h3>Centros</h3>
+        <table id="centros" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>Curso</th>
-                    <th>Nivel</th>
                     <th>Centro</th>
                     <th>Localidad</th>
                     <th>Provincia</th>
@@ -58,8 +61,22 @@
             </thead>
         </table>
     </div>
+    
+    <div class="row mt-2 card card-body">
+        <h3>Cursos</h3>
+        <table id="cursos" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Curso</th>
+                    <th>Nivel</th>
+                    <th>ID Centro</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
-    <div class="row m-2 card card-body">
+    <div class="row mt-2 card card-body">
         <h3>Causas</h3>
         <table id="causas" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -74,7 +91,7 @@
         </table>
     </div>
 
-    <div class="row m-2 card card-body">
+    <div class="row mt-2 card card-body">
         <h3>Empresas</h3>
         <table id="empresas" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -89,11 +106,13 @@
         </table>
     </div>
 
-    <div class="row m-2 card card-body">
+    <div class="row mt-2 card card-body">
         <h3>Proyectos</h3>
         <table id="proyectos" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
+                    <th>IDC</th>
+                    <th>IDE</th>
                     <th>Proyecto</th>
                     <th>Descripción</th>
                     <th>Imagen</th>
@@ -108,7 +127,7 @@
         </table>
     </div>
 
-    <div class="row m-2 card card-body">
+    <div class="row mt-2 card card-body">
         <h3>Alumnos</h3>
         <table id="alumnos" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -124,13 +143,12 @@
 <!-- modal edicion -->
 <div class="modal" id="modal" tabindex="-1" role="dialog" aria-hidden="true"> <div class="modal-dialog modal-lg" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Edición</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div> <div class="modal-body">
 <form>
-<div class="form-group">
-
-</div>
+    <div class="form-group"></div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Salir sin guardar</button>
+    <button onclick="sendApi(event)" type="button" class="btn btn-success">Guardar cambios</button>
+    </div> 
 </form>
-</div> <div class="modal-footer">
-<button type="button" class="btn btn-danger" data-dismiss="modal">Salir sin guardar</button>
-<button onclick="guardarCambios()" type="button" class="btn btn-success">Guardar cambios</button>
 </div> </div> </div> </div>
 <!-- modal edicion -->
     
@@ -141,99 +159,55 @@
 <script src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     
     <script>
+
+        var lastEdit;
+
         $(document).ready(function () {
+
+            // Inicialización de visualización de datos
             
             $('#alumnos').DataTable({
                 ordering: false, 
                 responsive: true,
-                ajax: {
-                    url: 'http://localhost/fct/api/public/api/alumnos',
-                    dataSrc: ''
-                },
-                columns:[
-                { data: 'id_alumno' },
-                { data: 'id_curso' },
-                { data: function(row, type, val, meta){
-                    return '<button class="editbtn">Editar</button>';
-                } },
-                ],
+                ajax: { url: 'http://localhost/fct/api/public/api/alumnos', dataSrc: '' },
+                columns:[ { data: 'id_strava' }, { data: 'id_curso' }, { data: function(row, type, val, meta){ return '<button class="editbtn">Editar</button>'; } }, ],
                 lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
             });
             
             $('#proyectos').DataTable({
                 responsive: true,
-                ajax: {
-                    url: 'http://localhost/fct/api/public/api/editproyectos',
-                    dataSrc: ''
-                },
-                columns:[
-                { data: 'proyecto' },
-                { data: 'descripcion_proyecto' },
-                { data: 'img_proyecto' },
-                { data: 'objetivo' },
-                { data: 'donacion' },
-                { data: 'hashtag_proyecto' },
-                { data: 'fecha_inicio' },
-                { data: 'fecha_fin' },
-                { data: function(row, type, val, meta){
-                    return '<button class="editbtn">Editar</button>';
-                } },
-                ],
+                ajax: { url: 'http://localhost/fct/api/public/api/editproyectos', dataSrc: '' },
+                columns:[ { data: 'id_causa' },{ data: 'id_empresa' },{ data: 'proyecto' }, { data: 'descripcion_proyecto' }, { data: 'img_proyecto' }, { data: 'objetivo' }, { data: 'donacion' }, { data: 'hashtag_proyecto' }, { data: 'fecha_inicio' }, { data: 'fecha_fin' }, { data: function(row, type, val, meta){ return '<button class="editbtn">Editar</button>'; } }, ],
                 lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
             });
             
             $('#empresas').DataTable({
                 responsive: true,
-                ajax: {
-                    url: 'http://localhost/fct/api/public/api/empresas',
-                    dataSrc: ''
-                },
-                columns:[
-                { data: 'empresa' },
-                { data: 'descripcion_empresa' },
-                { data: 'www_empresa' },
-                { data: 'img_empresa' },
-                { data: function(row, type, val, meta){
-                    return '<button class="editbtn">Editar</button>';
-                } },
-                ],
+                ajax: { url: 'http://localhost/fct/api/public/api/empresas', dataSrc: '' },
+                columns:[ { data: 'empresa' }, { data: 'descripcion_empresa' }, { data: 'www_empresa' }, { data: 'img_empresa' }, { data: function(row, type, val, meta){ return '<button class="editbtn">Editar</button>'; } }, ],
                 lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
             });
             
             $('#cursos').DataTable({
                 responsive: true,
-                ajax: {
-                    url: 'http://localhost/fct/api/public/api/cursos',
-                    dataSrc: ''
-                },
-                columns:[
-                { data: 'curso' },
-                { data: 'nivel' },
-                { data: 'centro' },
-                { data: 'localidad' },
-                { data: 'provincia' },
-                { data: function(row, type, val, meta){
-                    return '<button class="editbtn">Editar</button>';
-                } },
+                ajax: { url: 'http://localhost/fct/api/public/api/cursos', dataSrc: '' },
+                columns:[ { data: 'curso' }, { data: 'nivel' }, { data: 'id_centro' }, { data: function(row, type, val, meta){ return '<button class="editbtn">Editar</button>'; } },
+                ],
+                lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
+            });
+            
+            $('#centros').DataTable({
+                responsive: true,
+                ajax: { url: 'http://localhost/fct/api/public/api/centros', dataSrc: '' },
+                columns:[ { data: 'centro' }, { data: 'localidad' }, { data: 'provincia' }, { data: function(row, type, val, meta){ return '<button class="editbtn">Editar</button>'; } },
                 ],
                 lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
             });
             
             $('#causas').DataTable({
                 responsive: true,
-                ajax: {
-                    url: 'http://localhost/fct/api/public/api/causas',
-                    dataSrc: ''
-                },
-                columns:[
-                { data: 'causa' },
-                { data: 'descripcion_causa' },
-                { data: 'www_causa' },
-                { data: 'img_causa' },
-                { data: function(row, type, val, meta){
-                    return '<button class="editbtn">Editar</button>';
-                } },
-                ],
+                ajax: { url: 'http://localhost/fct/api/public/api/causas', dataSrc: '' },
+                columns:[ { data: 'causa' }, { data: 'descripcion_causa' }, { data: 'www_causa' }, { data: 'img_causa' }, { data: function(row, type, val, meta){ return '<button class="editbtn">Editar</button>'; } }, ],
                 lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
             });
 
@@ -241,27 +215,33 @@
             $('#mensajes').DataTable({
                 sorting: false,
                 responsive: true,
-                ajax: {
-                    url: 'http://localhost/fct/api/public/api/mensajes',
-                    dataSrc: ''
-                },
-                columns:[
-                { data: 'fecha' },
-                { data: 'org' },
-                { data: 'msg' },
-                { data: 'email' },
-                ],
+                ajax: { url: 'http://localhost/fct/api/public/api/mensajes', dataSrc: '' },
+                columns:[ { data: 'fecha' }, { data: 'org' }, { data: 'msg' }, { data: 'email' }, ],
                 lengthChange: false, language: { "sProcessing":     "Procesando...", "sLengthMenu":     "Mostrar _MENU_ registros", "sZeroRecords":    "No se encontraron resultados", "sEmptyTable":     "Ningún dato disponible en esta tabla", "sInfo":           "_START_ - _END_ de _TOTAL_", "sInfoEmpty":      "0 - 0 de un total de 0 registros", "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)", "sInfoPostFix":    "", "sSearch":         "Buscar:", "sUrl":            "", "sInfoThousands":  ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst":    "Primero", "sLast":     "Último", "sNext":     "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending":  ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } }
             });
 
+            // Inicialización de modales para edición
+
             $('#cursos').on('click', 'button.editbtn', function () {
+                lastEdit = this;
                 var data = $('#cursos').DataTable().row(this.parentElement.parentElement).data();
                 var modal = $('#modal .form-group');
                 modal.html('');
+                modal.append(newHiddenInput('api','http://fct.api/api/edit/cursos'));
                 modal.append(newHiddenInput('id_curso',data.id_curso));
-                modal.append(newHiddenInput('id_centro',data.id_centro));
                 modal.append(newInput('curso',data.curso));
                 modal.append(newInput('nivel',data.nivel));
+                modal.append(newInput('id_centro',data.id_centro));
+                $('#modal').modal('show');
+            } );
+
+            $('#centros').on('click', 'button.editbtn', function () {
+                lastEdit = this;
+                var data = $('#centros').DataTable().row(this.parentElement.parentElement).data();
+                var modal = $('#modal .form-group');
+                modal.html('');
+                modal.append(newHiddenInput('api','http://fct.api/api/edit/centros'));
+                modal.append(newHiddenInput('id_centro',data.id_centro));
                 modal.append(newInput('centro',data.centro));
                 modal.append(newInput('localidad',data.localidad));
                 modal.append(newInput('provincia',data.provincia));
@@ -269,9 +249,11 @@
             } );
 
             $('#empresas').on('click', 'button.editbtn', function () {
+                lastEdit = this;
                 var data = $('#empresas').DataTable().row(this.parentElement.parentElement).data();
                 var modal = $('#modal .form-group');
                 modal.html('');
+                modal.append(newHiddenInput('api','http://fct.api/api/edit/empresas'));
                 modal.append(newHiddenInput('id_empresa',data.id_empresa));
                 modal.append(newInput('empresa',data.empresa));
                 modal.append(newInput('descripcion_empresa',data.descripcion_empresa));
@@ -281,9 +263,11 @@
             } );
 
             $('#causas').on('click', 'button.editbtn', function () {
+                lastEdit = this;
                 var data = $('#causas').DataTable().row(this.parentElement.parentElement).data();
                 var modal = $('#modal .form-group');
                 modal.html('');
+                modal.append(newHiddenInput('api','http://fct.api/api/edit/causas'));
                 modal.append(newHiddenInput('id_causa',data.id_causa));
                 modal.append(newInput('causa',data.causa));
                 modal.append(newInput('descripcion_causa',data.descripcion_causa));
@@ -293,18 +277,23 @@
             } );
 
             $('#alumnos').on('click', 'button.editbtn', function () {
+                lastEdit = this;
                 var data = $('#alumnos').DataTable().row(this.parentElement.parentElement).data();
                 var modal = $('#modal .form-group');
                 modal.html('');
-                modal.append(newInput('id_alumno',data.id_alumno));
+                modal.append(newHiddenInput('api','http://fct.api/api/edit/alumnos'));
+                modal.append(newHiddenInput('id_alumno',data.id_alumno));
+                modal.append(newInput('id_strava',data.id_strava));
                 modal.append(newInput('curso',data.id_curso));
                 $('#modal').modal('show');
             } );
 
             $('#proyectos').on('click', 'button.editbtn', function () {
+                lastEdit = this;
                 var data = $('#proyectos').DataTable().row(this.parentElement.parentElement).data();
                 var modal = $('#modal .form-group');
                 modal.html('');
+                modal.append(newHiddenInput('api','http://fct.api/api/edit/editproyectos'));
                 modal.append(newHiddenInput('id_proyecto',data.id_proyecto));
                 modal.append(newHiddenInput('id_empresa',data.id_empresa));
                 modal.append(newHiddenInput('id_causa',data.id_causa));
@@ -321,6 +310,16 @@
 
         });
 
+        // Funciones
+
+        function sendApi(e){
+            var formulario = e.path[2];
+            $.post(formulario.children[0].children[0].value, $(formulario).serialize())
+            .done(function(r){
+                $(lastEdit.parentElement.parentElement.parentElement.parentElement).DataTable().ajax.reload(false);
+                $('#modal').modal('hide');
+            });
+        }
         function newInput(key, value){
             return '<label>'+key+': <input class="form-control" type="text" value="'+value+'" name="'+key+'" id="'+key+'"></label>';
         }
