@@ -115,10 +115,56 @@ $app->get('/api/strava', function ($request, $response, $args) {
 });
 
 //
-// DATATABLES
+// DATATABLES CRUD
 //
 
-// GETTERS
+// CREATE
+
+// alumnos (la clave foránea alumnos-contribuciones está conf. en cascada en update)
+$app->post('/api/create/alumnos', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("INSERT INTO alumnos (id_strava, id_curso) 
+    VALUES ('".$_POST['id_strava']."','".$_POST['id_curso']."')");
+    return $sth->execute();
+});
+// cursos
+$app->post('/api/create/cursos', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("INSERT INTO cursos (id_centro, curso, nivel) 
+    VALUES ('".$_POST['id_centro']."','".$_POST['curso']."','".$_POST['nivel']."')");
+    return $sth->execute();
+});
+// centros
+$app->post('/api/create/centros', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("INSERT INTO centros (centro, localidad, provincia) 
+    VALUES ('".$_POST['centro']."','".$_POST['localidad']."','".$_POST['provincia']."')");
+    return $sth->execute();
+});
+// causas
+$app->post('/api/create/causas', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("INSERT INTO causas (causa, www_causa, img_causa, descripcion_causa) 
+    VALUES ('".$_POST['causa']."','".$_POST['www_causa']."','".$_POST['img_causa']."','".$_POST['descripcion_causa']."')");
+    return $sth->execute();
+});
+// empresas
+$app->post('/api/create/empresas', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("INSERT INTO empresas (empresa, www_empresa, img_empresa, descripcion_empresa) 
+    VALUES ('".$_POST['empresa']."','".$_POST['www_empresa']."','".$_POST['img_empresa']."','".$_POST['descripcion_empresa']."')");
+    return $sth->execute();
+});
+// proyectos
+$app->post('/api/create/editproyectos', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("INSERT INTO proyectos 
+    (id_causa, id_empresa, proyecto, hashtag_proyecto, img_proyecto, descripcion_proyecto, objetivo, donacion, fecha_inicio, fecha_fin) 
+    VALUES ('".$_POST['id_causa']."','".$_POST['id_empresa']."','".$_POST['proyecto']."','".$_POST['hashtag_proyecto']."','".$_POST['img_proyecto']."','".$_POST['descripcion_proyecto']."','".$_POST['objetivo']."','".$_POST['donacion']."','".$_POST['fecha_inicio']."','".$_POST['fecha_fin']."')");
+    return $sth->execute();
+});
+
+// READ
 
 // mensajes
 $app->get('/api/mensajes', function ($request, $response, $args) {
@@ -177,10 +223,10 @@ $app->get('/api/editproyectos', function ($request, $response, $args) {
     return $this->response->withJson($todos);
 });
 
-// SETTERS
+// UPDATE
 
 // alumnos (la clave foránea alumnos-contribuciones está conf. en cascada en update)
-$app->post('/api/edit/alumnos', function ($request, $response, $args) {
+$app->post('/api/update/alumnos', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     $sql = "UPDATE alumnos SET 
     id_strava = '".$_POST["id_strava"]."',
@@ -190,7 +236,7 @@ $app->post('/api/edit/alumnos', function ($request, $response, $args) {
     return $sth->execute();
 });
 // cursos
-$app->post('/api/edit/cursos', function ($request, $response, $args) {
+$app->post('/api/update/cursos', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     $sth = $this->db->prepare("UPDATE cursos SET 
     curso = '".$_POST["curso"]."',
@@ -200,7 +246,7 @@ $app->post('/api/edit/cursos', function ($request, $response, $args) {
     return $sth->execute();
 });
 // centros
-$app->post('/api/edit/centros', function ($request, $response, $args) {
+$app->post('/api/update/centros', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     $sth = $this->db->prepare("UPDATE centros SET 
     centro = '".$_POST["centro"]."',
@@ -210,7 +256,7 @@ $app->post('/api/edit/centros', function ($request, $response, $args) {
     return $sth->execute();
 });
 // causas
-$app->post('/api/edit/causas', function ($request, $response, $args) {
+$app->post('/api/update/causas', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     $sth = $this->db->prepare("UPDATE causas SET 
     causa = '".$_POST["causa"]."',
@@ -221,7 +267,7 @@ $app->post('/api/edit/causas', function ($request, $response, $args) {
     return $sth->execute();
 });
 // empresas
-$app->post('/api/edit/empresas', function ($request, $response, $args) {
+$app->post('/api/update/empresas', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     $sth = $this->db->prepare("UPDATE empresas SET 
     empresa = '".$_POST["empresa"]."',
@@ -232,7 +278,7 @@ $app->post('/api/edit/empresas', function ($request, $response, $args) {
     return $sth->execute();
 });
 // proyectos
-$app->post('/api/edit/editproyectos', function ($request, $response, $args) {
+$app->post('/api/update/editproyectos', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     $sth = $this->db->prepare("UPDATE proyectos SET 
     proyecto = '".$_POST["proyecto"]."',

@@ -2,6 +2,10 @@ var lastEdit;
 
 $(document).ready(function () {
 
+    // Agrega botones para la inserción de filas
+    $('h3').append(
+        '<button class="ml-2 btn btn-success">+</button>'
+    );
     
     // Inicialización de visualización de datos
 
@@ -207,7 +211,7 @@ $(document).ready(function () {
         var data = $('#cursos').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/edit/cursos'));
+        modal.append(newHiddenInput('api', 'http://fct.api/api/update/cursos'));
         modal.append(newHiddenInput('api', 'http://fct.api/api/delete/cursos'));
         modal.append(newHiddenInput('id_curso', data.id_curso));
         modal.append(newInput('curso', data.curso));
@@ -221,7 +225,7 @@ $(document).ready(function () {
         var data = $('#centros').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/edit/centros'));
+        modal.append(newHiddenInput('api', 'http://fct.api/api/update/centros'));
         modal.append(newHiddenInput('api', 'http://fct.api/api/delete/centros'));
         modal.append(newHiddenInput('id_centro', data.id_centro));
         modal.append(newInput('centro', data.centro));
@@ -235,7 +239,7 @@ $(document).ready(function () {
         var data = $('#empresas').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/edit/empresas'));
+        modal.append(newHiddenInput('api', 'http://fct.api/api/update/empresas'));
         modal.append(newHiddenInput('api', 'http://fct.api/api/delete/empresas'));
         modal.append(newHiddenInput('id_empresa', data.id_empresa));
         modal.append(newInput('empresa', data.empresa));
@@ -250,7 +254,7 @@ $(document).ready(function () {
         var data = $('#causas').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/edit/causas'));
+        modal.append(newHiddenInput('api', 'http://fct.api/api/update/causas'));
         modal.append(newHiddenInput('api', 'http://fct.api/api/delete/causas'));
         modal.append(newHiddenInput('id_causa', data.id_causa));
         modal.append(newInput('causa', data.causa));
@@ -265,7 +269,7 @@ $(document).ready(function () {
         var data = $('#alumnos').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/edit/alumnos'));
+        modal.append(newHiddenInput('api', 'http://fct.api/api/update/alumnos'));
         modal.append(newHiddenInput('api', 'http://fct.api/api/delete/alumnos'));
         modal.append(newHiddenInput('id_alumno', data.id_alumno));
         modal.append(newInput('id_strava', data.id_strava));
@@ -278,7 +282,7 @@ $(document).ready(function () {
         var data = $('#proyectos').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/edit/editproyectos'));
+        modal.append(newHiddenInput('api', 'http://fct.api/api/update/editproyectos'));
         modal.append(newHiddenInput('api', 'http://fct.api/api/delete/editproyectos'));
         modal.append(newHiddenInput('id_proyecto', data.id_proyecto));
         modal.append(newHiddenInput('id_empresa', data.id_empresa));
