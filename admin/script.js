@@ -1,10 +1,43 @@
 var lastEdit;
+var dataTableUpdate;
+
+var centros;
+var causas;
+var empresas;
+
+function modalInsert(e){
+    dataTableUpdate = e.path[2].querySelector('table');
+    inputs = e.path[1].nextElementSibling.value.split(', ');
+    apiroute = e.path[1].nextElementSibling.nextElementSibling.value;
+    modal = $('#modaln .form-group');
+    modal.html('');
+    modal.append('<input type="hidden" value="'+apiroute+'"/>');
+    inputs.forEach(function (elemento) {
+        if (elemento.indexOf('fecha') != -1) {
+            modal.append('<label>'+elemento+': <input class="form-control" required type="date" name="'+elemento+'"></label>');
+        } else if(elemento == 'nivel'){
+            modal.append('<label>'+elemento+': '+
+            '<select class="form-control" required name="'+elemento+'">'+
+            '<option value="Primaria">Primaria</option>'+
+            '</select></label>');
+        } else if(elemento == 'id_centro'){
+            modal.append('<label>'+elemento+': '+
+            '<select class="form-control" required name="'+elemento+'">'+
+            '<option value="Primaria">Primaria</option>'+
+            '<option value="ESO">ESO</option>'+
+            '<option value="Bachiller">Bachiller</option>'+
+            '<option value="FP">FP</option>'+
+            '</select></label>');
+        } else modal.append('<label>'+elemento+': <input class="form-control" required type="text" name="'+elemento+'"></label>');
+    });
+    $('#modaln').modal('show');
+}
 
 $(document).ready(function () {
-
+    
     // Agrega botones para la inserción de filas
     $('h3').append(
-        '<button class="ml-2 btn btn-success">+</button>'
+        '<button onclick="modalInsert(event)" class="ml-2 btn btn-success">+</button>'
     );
     
     // Inicialización de visualización de datos
@@ -152,6 +185,11 @@ $(document).ready(function () {
         }, {
             width: '2em',
             data: function (row, type, val, meta) {
+                var ob = new Object({
+                    v: row.centro,
+                    k: row.id_centro
+                });
+                centro = ob;
                 return '<button class="editbtn btn btn-primary mr-1 mb-1">Editar</button>';
             }
         }, ],
@@ -301,6 +339,15 @@ $(document).ready(function () {
 });
 
 // Funciones
+
+function createApi(e) {
+    var formulario = e.path[2];
+    $.post(formulario.children[0].children[0].value, $(formulario).serialize())
+        .done(function (r) {
+            $(dataTableUpdate).DataTable().ajax.reload(false);
+            $('#modaln').modal('hide');
+        });
+}
 
 function updateApi(e) {
     var formulario = e.path[2];

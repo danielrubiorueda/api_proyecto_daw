@@ -156,7 +156,7 @@ $app->post('/api/create/empresas', function ($request, $response, $args) {
     return $sth->execute();
 });
 // proyectos
-$app->post('/api/create/editproyectos', function ($request, $response, $args) {
+$app->post('/api/create/proyectos', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
     $sth = $this->db->prepare("INSERT INTO proyectos 
     (id_causa, id_empresa, proyecto, hashtag_proyecto, img_proyecto, descripcion_proyecto, objetivo, donacion, fecha_inicio, fecha_fin) 

@@ -34,5 +34,6 @@ th {
 @media screen and (min-width: 600px) {
     h3 {
         position: absolute;
+        z-index: 1;
     }
 }
