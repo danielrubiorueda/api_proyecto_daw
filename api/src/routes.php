@@ -246,3 +246,49 @@ $app->post('/api/edit/editproyectos', function ($request, $response, $args) {
     WHERE id_proyecto = ".$_POST["id_proyecto"]);
     return $sth->execute();
 });
+
+// DELETE
+
+// alumnos (la clave foránea alumnos-contribuciones está conf. en cascada en update)
+$app->post('/api/delete/alumnos', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sql = "DELETE FROM alumnos 
+    WHERE id_alumno = ".$_POST["id_alumno"];
+    $sth = $this->db->prepare($sql);
+    return $sth->execute();
+});
+// cursos
+$app->post('/api/delete/cursos', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("DELETE FROM cursos 
+    WHERE id_curso = ".$_POST["id_curso"]);
+    return $sth->execute();
+});
+// centros
+$app->post('/api/delete/centros', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("DELETE FROM centros 
+    WHERE id_centro = ".$_POST["id_centro"]);
+    return $sth->execute();
+});
+// causas
+$app->post('/api/delete/causas', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("DELETE FROM causas
+    WHERE id_causa = ".$_POST["id_causa"]);
+    return $sth->execute();
+});
+// empresas
+$app->post('/api/delete/empresas', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("DELETE FROM empresas
+    WHERE id_empresa = ".$_POST["id_empresa"]);
+    return $sth->execute();
+});
+// proyectos
+$app->post('/api/delete/editproyectos', function ($request, $response, $args) {
+    header("Access-Control-Allow-Origin: *");
+    $sth = $this->db->prepare("DELETE FROM proyectos 
+    WHERE id_proyecto = ".$_POST["id_proyecto"]);
+    return $sth->execute();
+});
