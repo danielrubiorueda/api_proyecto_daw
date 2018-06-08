@@ -1,10 +1,10 @@
-body {
-    background: radial-gradient(#def6ff, #93e2ff, #3b89a7 73%), #3b89a7;
-    background-position-x: 50%;
-    background-position-y: -50em;
-    background-repeat: no-repeat;
-    background-size: 125em 94em;
-}
+.radial-gradient {
+    background: rgb(17, 61, 99);
+    background: 
+      radial-gradient(
+       at center, rgb(97, 168, 241), rgb(17, 61, 99)
+      );
+  }
 
 .card.card-body {
     background: rgba(0, 0, 0, 0.2) !important;

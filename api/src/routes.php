@@ -185,7 +185,8 @@ $app->get('/api/alumnos', function ($request, $response, $args) {
 // cursos
 $app->get('/api/cursos', function ($request, $response, $args) {
     header("Access-Control-Allow-Origin: *");
-    $sth = $this->db->prepare("SELECT * FROM cursos");
+    $sth = $this->db->prepare("SELECT * FROM cursos c
+    JOIN centros cc on c.id_centro = cc.id_centro");
     $sth->execute();
     $todos = $sth->fetchAll();
     return $this->response->withJson($todos);

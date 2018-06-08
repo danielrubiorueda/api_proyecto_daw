@@ -1,39 +1,25 @@
 var lastEdit;
 var dataTableUpdate;
-
 var centros;
+var cursos;
 var causas;
 var empresas;
 
-function modalInsert(e){
-    dataTableUpdate = e.path[2].querySelector('table');
-    inputs = e.path[1].nextElementSibling.value.split(', ');
-    apiroute = e.path[1].nextElementSibling.nextElementSibling.value;
-    modal = $('#modaln .form-group');
-    modal.html('');
-    modal.append('<input type="hidden" value="'+apiroute+'"/>');
-    inputs.forEach(function (elemento) {
-        if (elemento.indexOf('fecha') != -1) {
-            modal.append('<label>'+elemento+': <input class="form-control" required type="date" name="'+elemento+'"></label>');
-        } else if(elemento == 'nivel'){
-            modal.append('<label>'+elemento+': '+
-            '<select class="form-control" required name="'+elemento+'">'+
-            '<option value="Primaria">Primaria</option>'+
-            '</select></label>');
-        } else if(elemento == 'id_centro'){
-            modal.append('<label>'+elemento+': '+
-            '<select class="form-control" required name="'+elemento+'">'+
-            '<option value="Primaria">Primaria</option>'+
-            '<option value="ESO">ESO</option>'+
-            '<option value="Bachiller">Bachiller</option>'+
-            '<option value="FP">FP</option>'+
-            '</select></label>');
-        } else modal.append('<label>'+elemento+': <input class="form-control" required type="text" name="'+elemento+'"></label>');
-    });
-    $('#modaln').modal('show');
-}
-
 $(document).ready(function () {
+    // poblado de centros causas y empresas
+
+    $.get('http://fct.api/api/cursos').done(function (r) {
+        cursos = r;
+    });
+    $.get('http://fct.api/api/centros').done(function (r) {
+        centros = r;
+    });
+    $.get('http://fct.api/api/causas').done(function (r) {
+        causas = r;
+    });
+    $.get('http://fct.api/api/empresas').done(function (r) {
+        empresas = r;
+    });
     
     // Agrega botones para la inserción de filas
     $('h3').append(
@@ -185,11 +171,6 @@ $(document).ready(function () {
         }, {
             width: '2em',
             data: function (row, type, val, meta) {
-                var ob = new Object({
-                    v: row.centro,
-                    k: row.id_centro
-                });
-                centro = ob;
                 return '<button class="editbtn btn btn-primary mr-1 mb-1">Editar</button>';
             }
         }, ],
@@ -311,7 +292,7 @@ $(document).ready(function () {
         modal.append(newHiddenInput('api', 'http://fct.api/api/delete/alumnos'));
         modal.append(newHiddenInput('id_alumno', data.id_alumno));
         modal.append(newInput('id_strava', data.id_strava));
-        modal.append(newInput('curso', data.id_curso));
+        modal.append(newInput('id_curso', data.id_curso));
         $('#modal').modal('show');
     });
 
@@ -340,13 +321,88 @@ $(document).ready(function () {
 
 // Funciones
 
+function modalInsert(e){
+    dataTableUpdate = e.path[2].querySelector('table');
+    inputs = e.path[1].nextElementSibling.value.split(', ');
+    apiroute = e.path[1].nextElementSibling.nextElementSibling.value;
+    modal = $('#modaln .form-group');
+    modal.html('');
+    modal.append('<input type="hidden" value="'+apiroute+'"/>');
+    inputs.forEach(function (elemento) {
+        if (elemento.indexOf('fecha') != -1) {
+            modal.append('<label>'+elemento+': <input class="form-control" required type="date" name="'+elemento+'"></label>');
+        } else if(elemento == 'nivel'){
+            modal.append('<label>'+elemento+': '+
+            '<select class="form-control" required name="'+elemento+'">'+
+            '<option value="Primaria">Primaria</option>'+
+            '<option value="ESO">ESO</option>'+
+            '<option value="Bachiller">Bachiller</option>'+
+            '<option value="FP">FP</option>'+
+            '</select></label>');
+        } else if(elemento == 'id_centro'){
+            modal.append('<label>'+elemento+': '+
+            '<select class="form-control" required name="'+elemento+'">'+
+            opcionesCentro()+
+            '</select></label>');
+        } else if(elemento == 'id_curso'){
+            modal.append('<label>'+elemento+': '+
+            '<select class="form-control" required name="'+elemento+'">'+
+            opcionesCurso()+
+            '</select></label>');
+        } else if(elemento == 'id_causa'){
+            modal.append('<label>'+elemento+': '+
+            '<select class="form-control" required name="'+elemento+'">'+
+            opcionesCausa()+
+            '</select></label>');
+        } else if(elemento == 'id_empresa'){
+            modal.append('<label>'+elemento+': '+
+            '<select class="form-control" required name="'+elemento+'">'+
+            opcionesEmpresa()+
+            '</select></label>');
+        } else modal.append('<label>'+elemento+': <input class="form-control" required type="text" name="'+elemento+'"></label>');
+    });
+    $('#modaln').modal('show');
+}
+
+function opcionesCentro() {
+    var output = "";
+    centros.forEach(function(centro){
+        output += '<option value="'+centro.id_centro+'">'+centro.centro+'</option>';
+    });
+    return output;
+}
+
+function opcionesCurso() {
+    var output = "";
+    cursos.forEach(function(curso){
+        output += '<option value="'+curso.id_curso+'">'+curso.centro+' - '+curso.nivel+' - '+curso.curso+'</option>';
+    });
+    return output;
+}
+
+function opcionesCausa() {
+    var output = "";
+    causas.forEach(function(causa){
+        output += '<option value="'+causa.id_causa+'">'+causa.causa+'</option>';
+    });
+    return output;
+}
+
+function opcionesEmpresa(v) {
+    var output = "";
+    empresas.forEach(function(empresa){
+        output += '<option value="'+empresa.id_empresa+'">'+empresa.empresa+'</option>';
+    });
+    return output;
+}
+
 function createApi(e) {
     var formulario = e.path[2];
     $.post(formulario.children[0].children[0].value, $(formulario).serialize())
-        .done(function (r) {
-            $(dataTableUpdate).DataTable().ajax.reload(false);
-            $('#modaln').modal('hide');
-        });
+    .done(function (r) {
+        $(dataTableUpdate).DataTable().ajax.reload(false);
+        $('#modaln').modal('hide');
+    });
 }
 
 function updateApi(e) {
@@ -368,9 +424,26 @@ function deleteApi(e) {
 }
 
 function newInput(key, value) {
-    return '<label>' + key + ': <input class="form-control" type="text" value="' + value + '" name="' + key + '" id="' + key + '"></label>';
+    if(key == 'id_centro'){
+        nv = opcionesCentro(value);
+        return '<label>' + key + ': <select class="form-control "name="' + key + '" id="' + key + '"><option value="' + value + '">'+nv+'</option></label>';
+    } else if(key == 'id_curso'){
+        nv = opcionesCurso(value);
+        return '<label>' + key + ': <select class="form-control "name="' + key + '" id="' + key + '"><option value="' + value + '">'+nv+'</option></label>';
+    } else if(key == 'id_causa'){
+        nv = opcionesCausa(value);
+        return '<label>' + key + ': <select class="form-control "name="' + key + '" id="' + key + '"><option value="' + value + '">'+nv+'</option></label>';
+    } else if(key == 'id_empresa'){
+        nv = opcionesEmpresa(value);
+        return '<label>' + key + ': <select class="form-control "name="' + key + '" id="' + key + '"><option value="' + value + '">'+nv+'</option></label>';
+    } else return '<label>' + key + ': <input class="form-control" type="text" value="' + value + '" name="' + key + '" id="' + key + '"></label>';
 }
 
 function newHiddenInput(key, value) {
     return '<input readonly type="hidden" name="' + key + '" value="' + value + '" id="' + key + '">';
+}
+
+var d = document.querySelector('.radial-gradient');
+document.onmousemove = function(e){
+    d.style.background = 'radial-gradient(at ' + e.pageX + 'px ' + e.pageY + 'px, #3078c1, #113d63)';
 }
