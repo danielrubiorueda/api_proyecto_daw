@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
   UNIQUE KEY `id_strava` (`id_strava`),
   KEY `id_curso` (`id_curso`),
   CONSTRAINT `FK_alumnos_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `alumnos` DISABLE KEYS */;
 INSERT IGNORE INTO `alumnos` (`id_alumno`, `id_strava`, `id_curso`) VALUES
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `causas` (
   `descripcion_causa` varchar(800) NOT NULL,
   `img_causa` varchar(200) NOT NULL,
   PRIMARY KEY (`id_causa`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `causas` DISABLE KEYS */;
 INSERT IGNORE INTO `causas` (`id_causa`, `www_causa`, `causa`, `descripcion_causa`, `img_causa`) VALUES
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `centros` (
   `localidad` varchar(50) NOT NULL,
   `provincia` varchar(50) NOT NULL,
   PRIMARY KEY (`id_centro`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `centros` DISABLE KEYS */;
 INSERT IGNORE INTO `centros` (`id_centro`, `centro`, `localidad`, `provincia`) VALUES
@@ -60,20 +60,6 @@ CREATE TABLE IF NOT EXISTS `contribuciones` (
 ) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `contribuciones` DISABLE KEYS */;
-INSERT IGNORE INTO `contribuciones` (`id_contribucion`, `id_strava`, `id_proyecto`, `contribucion`, `fecha_contribucion`) VALUES
-	(172, 31364834, 1, 0.00, '2018-06-06 13:14:10');
-INSERT IGNORE INTO `contribuciones` (`id_contribucion`, `id_strava`, `id_proyecto`, `contribucion`, `fecha_contribucion`) VALUES
-	(173, 31364834, 2, 0.00, '2018-06-06 13:14:10');
-INSERT IGNORE INTO `contribuciones` (`id_contribucion`, `id_strava`, `id_proyecto`, `contribucion`, `fecha_contribucion`) VALUES
-	(174, 31364834, 3, 0.00, '2018-06-06 13:14:10');
-INSERT IGNORE INTO `contribuciones` (`id_contribucion`, `id_strava`, `id_proyecto`, `contribucion`, `fecha_contribucion`) VALUES
-	(175, 31364834, 4, 0.00, '2018-06-06 13:14:10');
-INSERT IGNORE INTO `contribuciones` (`id_contribucion`, `id_strava`, `id_proyecto`, `contribucion`, `fecha_contribucion`) VALUES
-	(176, 31364834, 5, 0.00, '2018-06-06 13:14:10');
-INSERT IGNORE INTO `contribuciones` (`id_contribucion`, `id_strava`, `id_proyecto`, `contribucion`, `fecha_contribucion`) VALUES
-	(177, 31364834, 6, 0.00, '2018-06-06 13:14:10');
-INSERT IGNORE INTO `contribuciones` (`id_contribucion`, `id_strava`, `id_proyecto`, `contribucion`, `fecha_contribucion`) VALUES
-	(178, 31364834, 6, 0.00, '2018-06-06 13:14:10');
 /*!40000 ALTER TABLE `contribuciones` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `cursos` (
@@ -84,11 +70,13 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   PRIMARY KEY (`id_curso`),
   KEY `FK_cursos_centros` (`id_centro`),
   CONSTRAINT `FK_cursos_centros` FOREIGN KEY (`id_centro`) REFERENCES `centros` (`id_centro`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `cursos` DISABLE KEYS */;
 INSERT IGNORE INTO `cursos` (`id_curso`, `id_centro`, `curso`, `nivel`) VALUES
 	(1, 1, '1a', 'ESO');
+INSERT IGNORE INTO `cursos` (`id_curso`, `id_centro`, `curso`, `nivel`) VALUES
+	(3, 1, '1b', 'ESO');
 /*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `empresas` (
@@ -98,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `empresas` (
   `descripcion_empresa` varchar(500) NOT NULL,
   `img_empresa` varchar(200) NOT NULL,
   PRIMARY KEY (`id_empresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `empresas` DISABLE KEYS */;
 INSERT IGNORE INTO `empresas` (`id_empresa`, `www_empresa`, `empresa`, `descripcion_empresa`, `img_empresa`) VALUES
@@ -112,9 +100,11 @@ CREATE TABLE IF NOT EXISTS `mensajes` (
   `msg` tinytext NOT NULL,
   `email` tinytext NOT NULL,
   PRIMARY KEY (`id_mensaje`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `mensajes` DISABLE KEYS */;
+INSERT IGNORE INTO `mensajes` (`id_mensaje`, `fecha`, `org`, `msg`, `email`) VALUES
+	(5, '2018-06-07 12:59:29', 'test', 'hola a todos', 'test@test.com');
 INSERT IGNORE INTO `mensajes` (`id_mensaje`, `fecha`, `org`, `msg`, `email`) VALUES
 	(4, '2018-06-05 13:55:21', 'Contakt', 'Quiero participar como empresa y donar 10000€', 'hola@contakt.com');
 /*!40000 ALTER TABLE `mensajes` ENABLE KEYS */;
@@ -137,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `proyectos` (
   KEY `id_causa` (`id_causa`),
   CONSTRAINT `FK_proyectos_causas` FOREIGN KEY (`id_causa`) REFERENCES `causas` (`id_causa`),
   CONSTRAINT `FK_proyectos_empresas` FOREIGN KEY (`id_empresa`) REFERENCES `empresas` (`id_empresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
 INSERT IGNORE INTO `proyectos` (`id_proyecto`, `id_causa`, `id_empresa`, `proyecto`, `hashtag_proyecto`, `img_proyecto`, `descripcion_proyecto`, `objetivo`, `donacion`, `fecha_inicio`, `fecha_fin`) VALUES
@@ -152,6 +142,8 @@ INSERT IGNORE INTO `proyectos` (`id_proyecto`, `id_causa`, `id_empresa`, `proyec
 	(5, 1, 1, 'Helados para los mayores', 'mayoresconhelados2', 'x2.jpg', 'Vamos a repartir helados para los mayores que no se lo pueden permitir', 1000, 2000, '2018-01-01', '2018-06-30');
 INSERT IGNORE INTO `proyectos` (`id_proyecto`, `id_causa`, `id_empresa`, `proyecto`, `hashtag_proyecto`, `img_proyecto`, `descripcion_proyecto`, `objetivo`, `donacion`, `fecha_inicio`, `fecha_fin`) VALUES
 	(6, 1, 1, 'Globos para todos', 'globosparatodos2', 'x3.jpg', 'Vamos a repartir globos para todo el mundo que esté triste', 1000, 3000, '2018-01-01', '2018-06-30');
+INSERT IGNORE INTO `proyectos` (`id_proyecto`, `id_causa`, `id_empresa`, `proyecto`, `hashtag_proyecto`, `img_proyecto`, `descripcion_proyecto`, `objetivo`, `donacion`, `fecha_inicio`, `fecha_fin`) VALUES
+	(7, 1, 1, 'Hola mundo', 'holamundo', 'img', 'desc', 500, 500, '2018-06-12', '2018-06-04');
 /*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
