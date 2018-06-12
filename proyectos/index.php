@@ -30,27 +30,21 @@
                 <div class="row">
                     <div class="col-md-4">
                         <h2>Para causas solidarias</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                            mollis euismod. Donec sed odio dui. </p>
+                        <p>Crea tu propia causa solidaria y haz realidad tus sueños... ¿A qué esperas?</p>
                         <p>
-                            <a class="btn btn-secondary contacto" href="#" role="button">Contacta con nosotros</a>
+                            <a class="btn btn-secondary contacto" href="" role="button">Participa</a>
                         </p>
                     </div>
                     <div class="col-md-4">
                         <h2>Gracias a las empresas</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                            mollis euismod. Donec sed odio dui. </p>
+                        <p>Agradecimiento a las empresas que fomentan el deporte por una mejor calidad de vida. Gracias al apoyo de las instituciones podremos frenar el sedentarismo y la obesidad, y así reducir el riesgo de sufrir enfermedades.</p>
                         <p>
-                            <a class="btn btn-secondary contacto" href="#" role="button">Contacta con nosotros</a>
+                            <a class="btn btn-secondary contacto" href="" role="button">Contacta con nosotros</a>
                         </p>
                     </div>
                     <div class="col-md-4">
                         <h2>Por los alumnos</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                            mollis euismod. Donec sed odio dui. </p>
+                        <p>En este apartado podrás controlar y realizar un seguimiento de los kilómetros que realizan tus alumnos para el trabajo de la resistencia aeróbica, clave en el desarrollo de la condición física salud.</p>
                         <p>
                             <a class="btn btn-success stravalink" href="/donacion" role="button">Conecta con Strava</a>
                         </p>
