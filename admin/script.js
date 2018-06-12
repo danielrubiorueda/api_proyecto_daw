@@ -1,3 +1,4 @@
+var baseUrl = 'http://fct.danielrubiorueda.com/';
 var lastEdit;
 var dataTableUpdate;
 var centros;
@@ -8,16 +9,16 @@ var empresas;
 $(document).ready(function () {
     // poblado de centros causas y empresas
 
-    $.get('http://fct.api/api/cursos').done(function (r) {
+    $.get(baseUrl+'api/public/api/cursos').done(function (r) {
         cursos = r;
     });
-    $.get('http://fct.api/api/centros').done(function (r) {
+    $.get(baseUrl+'api/public/api/centros').done(function (r) {
         centros = r;
     });
-    $.get('http://fct.api/api/causas').done(function (r) {
+    $.get(baseUrl+'api/public/api/causas').done(function (r) {
         causas = r;
     });
-    $.get('http://fct.api/api/empresas').done(function (r) {
+    $.get(baseUrl+'api/public/api/empresas').done(function (r) {
         empresas = r;
     });
     
@@ -57,7 +58,7 @@ $(document).ready(function () {
         ordering: false,
         responsive: true,
         ajax: {
-            url: 'http://localhost/fct/api/public/api/alumnos',
+            url: baseUrl+'api/public/api/alumnos',
             dataSrc: ''
         },
         columns: [{
@@ -77,7 +78,7 @@ $(document).ready(function () {
     $('#proyectos').DataTable({
         responsive: true,
         ajax: {
-            url: 'http://localhost/fct/api/public/api/editproyectos',
+            url: baseUrl+'api/public/api/editproyectos',
             dataSrc: ''
         },
         columns: [{
@@ -113,7 +114,7 @@ $(document).ready(function () {
     $('#empresas').DataTable({
         responsive: true,
         ajax: {
-            url: 'http://localhost/fct/api/public/api/empresas',
+            url: baseUrl+'api/public/api/empresas',
             dataSrc: ''
         },
         columns: [{
@@ -137,7 +138,7 @@ $(document).ready(function () {
     $('#cursos').DataTable({
         responsive: true,
         ajax: {
-            url: 'http://localhost/fct/api/public/api/cursos',
+            url: baseUrl+'api/public/api/cursos',
             dataSrc: ''
         },
         columns: [{
@@ -159,7 +160,7 @@ $(document).ready(function () {
     $('#centros').DataTable({
         responsive: true,
         ajax: {
-            url: 'http://localhost/fct/api/public/api/centros',
+            url: baseUrl+'api/public/api/centros',
             dataSrc: ''
         },
         columns: [{
@@ -181,7 +182,7 @@ $(document).ready(function () {
     $('#causas').DataTable({
         responsive: true,
         ajax: {
-            url: 'http://localhost/fct/api/public/api/causas',
+            url: baseUrl+'api/public/api/causas',
             dataSrc: ''
         },
         columns: [{
@@ -207,7 +208,7 @@ $(document).ready(function () {
         sorting: false,
         responsive: true,
         ajax: {
-            url: 'http://localhost/fct/api/public/api/mensajes',
+            url: baseUrl+'api/public/api/mensajes',
             dataSrc: ''
         },
         columns: [{
@@ -230,8 +231,8 @@ $(document).ready(function () {
         var data = $('#cursos').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/update/cursos'));
-        modal.append(newHiddenInput('api', 'http://fct.api/api/delete/cursos'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/update/cursos'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/delete/cursos'));
         modal.append(newHiddenInput('id_curso', data.id_curso));
         modal.append(newInput('curso', data.curso));
         modal.append(newInput('nivel', data.nivel));
@@ -244,8 +245,8 @@ $(document).ready(function () {
         var data = $('#centros').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/update/centros'));
-        modal.append(newHiddenInput('api', 'http://fct.api/api/delete/centros'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/update/centros'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/delete/centros'));
         modal.append(newHiddenInput('id_centro', data.id_centro));
         modal.append(newInput('centro', data.centro));
         modal.append(newInput('localidad', data.localidad));
@@ -258,8 +259,8 @@ $(document).ready(function () {
         var data = $('#empresas').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/update/empresas'));
-        modal.append(newHiddenInput('api', 'http://fct.api/api/delete/empresas'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/update/empresas'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/delete/empresas'));
         modal.append(newHiddenInput('id_empresa', data.id_empresa));
         modal.append(newInput('empresa', data.empresa));
         modal.append(newInput('descripcion_empresa', data.descripcion_empresa));
@@ -273,8 +274,8 @@ $(document).ready(function () {
         var data = $('#causas').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/update/causas'));
-        modal.append(newHiddenInput('api', 'http://fct.api/api/delete/causas'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/update/causas'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/delete/causas'));
         modal.append(newHiddenInput('id_causa', data.id_causa));
         modal.append(newInput('causa', data.causa));
         modal.append(newInput('descripcion_causa', data.descripcion_causa));
@@ -288,8 +289,8 @@ $(document).ready(function () {
         var data = $('#alumnos').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/update/alumnos'));
-        modal.append(newHiddenInput('api', 'http://fct.api/api/delete/alumnos'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/update/alumnos'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/delete/alumnos'));
         modal.append(newHiddenInput('id_alumno', data.id_alumno));
         modal.append(newInput('id_strava', data.id_strava));
         modal.append(newInput('id_curso', data.id_curso));
@@ -301,8 +302,8 @@ $(document).ready(function () {
         var data = $('#proyectos').DataTable().row(this.parentElement.parentElement).data();
         var modal = $('#modal .form-group');
         modal.html('');
-        modal.append(newHiddenInput('api', 'http://fct.api/api/update/editproyectos'));
-        modal.append(newHiddenInput('api', 'http://fct.api/api/delete/editproyectos'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/update/editproyectos'));
+        modal.append(newHiddenInput('api', baseUrl+'api/public/api/delete/editproyectos'));
         modal.append(newHiddenInput('id_proyecto', data.id_proyecto));
         modal.append(newHiddenInput('id_empresa', data.id_empresa));
         modal.append(newHiddenInput('id_causa', data.id_causa));

@@ -115,7 +115,25 @@ main#inicio {
     max-width: 25em;
     margin: 5px 0;
 }
-
+.navbar-toggler-icon {
+    font-size: 2em;
+    color: #ffffff;
+    background: #ff787b !important;
+    border-radius: 10em !important;
+    line-height: 1.5 !important;
+}
+.navbar-toggler-icon, .navbar-toggler {
+    outline: none !important;
+}
+#navbar a{
+    font-size:1.3em;
+    border-bottom:solid gray;
+    margin:5px;
+    background:#ff787b;
+    color:#ffffff !important;
+    border-radius: 5px;
+    padding: 5px;
+}
 @media screen and (max-width: 600px){
     .jumbotron.inicio {
         background-image: url(../img/1s.jpg);

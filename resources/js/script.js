@@ -10,13 +10,6 @@ $(function () {
     var godefer = document.getElementsByTagName('link')[0];
     godefer.parentNode.insertBefore(cssd, godefer);
 
-    var cssd2 = document.createElement('link');
-    cssd2.rel = 'stylesheet';
-    cssd2.href = '/resources/css/style.css';
-    cssd2.type = 'text/css';
-    var godefer2 = document.getElementsByTagName('link')[0];
-    godefer2.parentNode.insertBefore(cssd2, godefer2);
-
     $('#loader').fadeOut(500);
 
     contacto();
@@ -50,7 +43,7 @@ function contacto(){
     });
     $('#formulario form').on('submit', function (e) {
        e.preventDefault();
-       $.post('http://127.0.0.1/fct/api/public/api/mensaje', $(this).serialize())
+       $.post('http://fct.danielrubiorueda.com/api/public/api/mensaje', $(this).serialize())
        .done(function (r) {
             $('#formulario').modal('hide');
        });
@@ -80,5 +73,5 @@ var ahora = Math.round(new Date().getTime()/1000.0);
 var ayer = ahora - 86400;
 var linkAct = "https://www.strava.com/api/v3/athlete/activities?before="+ahora+"&after="+ayer+"&access_token=";
 var idapp = '26016';
-var redirect = 'http://localhost/fct/api/public/api/strava';
+var redirect = 'http://fct.danielrubiorueda.com/api/public/api/strava';
 var linkAuth = 'https://www.strava.com/oauth/authorize?client_id='+idapp+'&response_type=code&approval_prompt=force&redirect_uri='+redirect;

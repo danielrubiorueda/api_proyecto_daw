@@ -106,10 +106,10 @@ $app->get('/api/strava', function ($request, $response, $args) {
     curl_close($curl);
 
     if ($err) {
-        return $response->withHeader('Location', 'http://127.0.0.1:5500/');
+        return $response->withHeader('Location', 'http://fct.danielrubiorueda.com/');
     } else {
         $curl_response = json_decode($curl_response);
-        return $response->withHeader('Location', 'http://127.0.0.1:5500/donacion/?'.http_build_query($curl_response));
+        return $response->withHeader('Location', 'http://fct.danielrubiorueda.com/donacion/?'.http_build_query($curl_response));
     }
 
 });
