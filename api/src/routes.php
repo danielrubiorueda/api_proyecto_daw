@@ -49,7 +49,7 @@ $app->post('/api/donacion', function ($request, $response, $args) {
         $auxdonacion += $sobrante;
         $donacion = ($value["resta"] < $auxdonacion) ? $value["resta"] : $auxdonacion ;
         $sobrante = ($value["resta"] < $auxdonacion) ? $auxdonacion-$value["resta"] : 0 ;
-        $query = "INSERT INTO `fct`.`contribuciones` (`id_strava`, `id_proyecto`, `contribucion`) VALUES ('".$_POST['idalumno']."', '".$value["id_proyecto"]."', '".$donacion."');";
+        $query = "INSERT INTO `contribuciones` (`id_strava`, `id_proyecto`, `contribucion`) VALUES ('".$_POST['idalumno']."', '".$value["id_proyecto"]."', '".$donacion."');";
         $sth = $this->db->prepare($query);
         $sth->execute();
     }
@@ -106,6 +106,8 @@ $app->get('/api/strava', function ($request, $response, $args) {
     curl_close($curl);
 
     if ($err) {
+        return $response->withHeader('Location', 'http://fct.danielrubiorueda.com/');
+    } else if (!stripos($curl_response,'access_token')) {
         return $response->withHeader('Location', 'http://fct.danielrubiorueda.com/');
     } else {
         $curl_response = json_decode($curl_response);

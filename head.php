@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Description" content="Corre y cambia el mundo con SoliRun, la plataforma solidaria">
     <title>SoliRun</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="preload" href="/resources/css/bootstrap.min.css" as="style">
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css?1" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css?2" />
     <noscript>
         <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css" />
     </noscript>
@@ -52,6 +52,9 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a href="/proyectos" class="nav-link">Proyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/empresas" class="nav-link">Empresas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link stravalink" href='#colabora'>Conecta con Strava</a>

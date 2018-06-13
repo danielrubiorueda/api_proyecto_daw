@@ -90,7 +90,7 @@
     <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <script src="/resources/js/popper.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
-    <script src="/resources/js/script.js"></script>
+    <script src="/resources/js/script.js?1"></script>
 
     <script type="text/javascript">
         $.get('http://fct.danielrubiorueda.com/api/public/api/inicio').done(function (r) {

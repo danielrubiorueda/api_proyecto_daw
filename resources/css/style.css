@@ -28,8 +28,13 @@
     color: #c7d099;
 }
 .btn-success{
-    border-color: #a3b545 !important;
-    background-color: #a3b545 !important;
+    border-color: #667a00 !important;
+    background-color: #667a00 !important;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #006add !important;
+    border-color: #006add !important;
 }
 #navbar a:hover {
     color: #262626;
@@ -56,6 +61,7 @@
     border-radius: 0 !important;
     padding-top: 7em !important;
     margin: 2em 0 !important;
+    background-color: black;
 }
 .form-control {
     flex: 1;
@@ -92,9 +98,9 @@ footer p{
     font-size: 1.3em;
     text-align: center;
     font-weight: bold;
-    color: #a1b75c;
+    color: #768e2c;
     border-radius: 10px;
-    border: solid 2px #a1b75c;
+    border: solid 2px #768e2c;
 }
 
 main#inicio {
@@ -117,22 +123,24 @@ main#inicio {
 }
 .navbar-toggler-icon {
     font-size: 2em;
-    color: #ffffff;
-    background: #ff787b !important;
+    color: #5f790c;
+    background: #ffffff !important;
     border-radius: 10em !important;
     line-height: 1.5 !important;
+    border-bottom: solid 2px;
 }
 .navbar-toggler-icon, .navbar-toggler {
     outline: none !important;
 }
 #navbar a{
     font-size:1.3em;
-    border-bottom:solid gray;
+    border-bottom: solid;
     margin:5px;
-    background:#ff787b;
-    color:#ffffff !important;
+    background: #ffffff;
+    color: #5f790c !important;
     border-radius: 5px;
     padding: 5px;
+    text-align: center;
 }
 @media screen and (max-width: 600px){
     .jumbotron.inicio {
