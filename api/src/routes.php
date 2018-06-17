@@ -26,7 +26,7 @@ $app->post('/api/donacion', function ($request, $response, $args) {
     }
 
     // comprueba si hay donación en las últimas 24 horas
-    $sth = $this->db->prepare("SELECT max(id_contribucion), fecha_contribucion from contribuciones where id_strava = ".$_POST['idalumno']);
+    $sth = $this->db->prepare("SELECT fecha_contribucion FROM contribuciones WHERE id_strava = ".$_POST['idalumno']." ORDER BY id_contribucion DESC LIMIT 1 ");
     $sth->execute();
     $respuesta = $sth->fetch();
     $respuesta = $respuesta['fecha_contribucion'];
